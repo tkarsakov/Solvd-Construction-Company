@@ -30,6 +30,7 @@ public enum ConnectionPool {
                     for (var trace : e.getStackTrace()) {
                         LOGGER.fatal(trace.toString());
                     }
+                    System.exit(1);
                 }
             }
         }
@@ -42,6 +43,12 @@ public enum ConnectionPool {
         public synchronized void releaseConnection(Connection connection){
             connectionsDeque.add(connection);
             notify();
+        }
+
+        public void closeConnections() throws SQLException{
+            for (Connection c: connectionsDeque) {
+                c.close();
+            }
         }
     }
     private final ConnectionPoolService connectionPoolService = new ConnectionPoolService();
