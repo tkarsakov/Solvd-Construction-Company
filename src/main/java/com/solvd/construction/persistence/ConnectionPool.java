@@ -11,11 +11,17 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public enum ConnectionPool {
     INSTANCE;
-
+    private static final Logger LOGGER = LogManager.getLogger();
     private final ConnectionPoolService connectionPoolService = new ConnectionPoolService();
 
     public Connection getConnection() {
-        return connectionPoolService.getConnection();
+        try {
+            return connectionPoolService.getConnection();
+        } catch (InterruptedException e) {
+            LOGGER.fatal("Thread interrupted while getting connection");
+            System.exit(2);
+        }
+        return null;
     }
 
     public void releaseConnection(Connection connection) {
@@ -37,7 +43,6 @@ public enum ConnectionPool {
             for (int i = 0; i < POOL_SIZE; i++) {
                 try {
                     connectionsDeque.add(DriverManager.getConnection(jdbcUrl, username, password));
-                    connectionsDeque.peekLast().setAutoCommit(false);
                 } catch (SQLException e) {
                     LOGGER.fatal("Cannot connect to MySQL server");
                     for (var trace : e.getStackTrace()) {
@@ -48,12 +53,16 @@ public enum ConnectionPool {
             }
         }
 
-        public synchronized Connection getConnection() {
+        public synchronized Connection getConnection() throws InterruptedException {
+            if (connectionsDeque.peekLast() == null) {
+                wait();
+            }
             return connectionsDeque.pop();
         }
 
         public synchronized void releaseConnection(Connection connection) {
             connectionsDeque.add(connection);
+            notify();
         }
 
         public void closeConnections() throws SQLException {
