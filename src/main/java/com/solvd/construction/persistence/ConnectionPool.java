@@ -25,6 +25,7 @@ public enum ConnectionPool {
             for (int i = 0; i < POOL_SIZE; i++) {
                 try {
                     connectionsDeque.add(DriverManager.getConnection(jdbcUrl, username, password));
+                    connectionsDeque.peekLast().setAutoCommit(false);
                 } catch (SQLException e) {
                     LOGGER.fatal("Cannot connect to MySQL server");
                     for (var trace : e.getStackTrace()) {
