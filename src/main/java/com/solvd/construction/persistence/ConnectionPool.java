@@ -11,10 +11,22 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 
 public enum ConnectionPool {
     INSTANCE;
+
+    private final ConnectionPoolService connectionPoolService = new ConnectionPoolService();
+
+    public Connection getConnection() {
+        return connectionPoolService.getConnection();
+    }
+
+    public void releaseConnection(Connection connection) {
+        connectionPoolService.releaseConnection(connection);
+    }
+
     private static class ConnectionPoolService {
         private static final Logger LOGGER = LogManager.getLogger();
         private static final int POOL_SIZE = 5;
         private final ConcurrentLinkedDeque<Connection> connectionsDeque;
+
         private ConnectionPoolService() {
             connectionsDeque = new ConcurrentLinkedDeque<>();
             Dotenv dotenv = Dotenv.configure()
@@ -35,29 +47,19 @@ public enum ConnectionPool {
                 }
             }
         }
-        public synchronized Connection getConnection() throws InterruptedException {
-            if (connectionsDeque.peekLast() == null) {
-                wait();
-            }
+
+        public synchronized Connection getConnection() {
             return connectionsDeque.pop();
         }
-        public synchronized void releaseConnection(Connection connection){
+
+        public synchronized void releaseConnection(Connection connection) {
             connectionsDeque.add(connection);
-            notify();
         }
 
-        public void closeConnections() throws SQLException{
-            for (Connection c: connectionsDeque) {
+        public void closeConnections() throws SQLException {
+            for (Connection c : connectionsDeque) {
                 c.close();
             }
         }
-    }
-    private final ConnectionPoolService connectionPoolService = new ConnectionPoolService();
-
-    public Connection getConnection() throws InterruptedException{
-        return connectionPoolService.getConnection();
-    }
-    public void releaseConnection(Connection connection) {
-        connectionPoolService.releaseConnection(connection);
     }
 }

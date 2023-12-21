@@ -33,11 +33,11 @@ public class Client {
         this.clientEmail = clientEmail;
     }
 
-    public Country getCountryId() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountryId(Country country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 }
