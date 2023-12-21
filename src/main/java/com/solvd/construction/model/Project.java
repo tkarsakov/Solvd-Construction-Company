@@ -4,26 +4,26 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Project {
-    private final int id;
+    private final long id;
     private Timestamp startDate;
     private Timestamp finishDate;
     private Client client;
-    private int floors;
-    private boolean interiorWork;
+    private long floors;
+    private boolean longeriorWork;
     private BigDecimal budget;
 
-    public Project(int id, Timestamp startDate, Timestamp finishDate, Client client,
-                   int floors, boolean interiorWork, BigDecimal budget) {
+    public Project(long id, Timestamp startDate, Timestamp finishDate, Client client,
+                   long floors, boolean longeriorWork, BigDecimal budget) {
         this.id = id;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.client = client;
         this.floors = floors;
-        this.interiorWork = interiorWork;
+        this.longeriorWork = longeriorWork;
         this.budget = budget;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -51,20 +51,20 @@ public class Project {
         this.client = client;
     }
 
-    public int getFloors() {
+    public long getFloors() {
         return floors;
     }
 
-    public void setFloors(int floors) {
+    public void setFloors(long floors) {
         this.floors = floors;
     }
 
-    public boolean isInteriorWork() {
-        return interiorWork;
+    public boolean islongeriorWork() {
+        return longeriorWork;
     }
 
-    public void setInteriorWork(boolean interiorWork) {
-        this.interiorWork = interiorWork;
+    public void setlongeriorWork(boolean longeriorWork) {
+        this.longeriorWork = longeriorWork;
     }
 
     public BigDecimal getBudget() {

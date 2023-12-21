@@ -3,13 +3,13 @@ package com.solvd.construction.model;
 import java.math.BigDecimal;
 
 public class ProjectMaterial {
-    private final int id;
+    private final long id;
     private SuppliedMaterial suppliedMaterial;
     private BigDecimal materialAmount;
     private Project project;
     private String measure;
 
-    public ProjectMaterial(int id, SuppliedMaterial suppliedMaterial, BigDecimal materialAmount,
+    public ProjectMaterial(long id, SuppliedMaterial suppliedMaterial, BigDecimal materialAmount,
                            Project project, String measure) {
         this.id = id;
         this.suppliedMaterial = suppliedMaterial;
@@ -18,7 +18,7 @@ public class ProjectMaterial {
         this.measure = measure;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

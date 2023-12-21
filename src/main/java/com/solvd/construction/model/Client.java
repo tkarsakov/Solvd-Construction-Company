@@ -1,19 +1,19 @@
 package com.solvd.construction.model;
 
 public class Client {
-    private final int id;
+    private final long id;
     private String clientName;
     private String clientEmail;
     private Country country;
 
-    public Client(int id, String clientName, String clientEmail, Country country) {
+    public Client(long id, String clientName, String clientEmail, Country country) {
         this.id = id;
         this.clientName = clientName;
         this.clientEmail = clientEmail;
         this.country = country;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

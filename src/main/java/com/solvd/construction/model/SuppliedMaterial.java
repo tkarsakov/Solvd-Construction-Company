@@ -3,19 +3,19 @@ package com.solvd.construction.model;
 import java.math.BigDecimal;
 
 public class SuppliedMaterial {
-    private final int id;
+    private final long id;
     private MaterialName materialName;
     private Supplier supplier;
     private BigDecimal price;
 
-    public SuppliedMaterial(int id, MaterialName materialName, Supplier supplier, BigDecimal price) {
+    public SuppliedMaterial(long id, MaterialName materialName, Supplier supplier, BigDecimal price) {
         this.id = id;
         this.materialName = materialName;
         this.supplier = supplier;
         this.price = price;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
