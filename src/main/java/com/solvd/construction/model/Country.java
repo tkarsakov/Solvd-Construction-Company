@@ -1,18 +1,12 @@
 package com.solvd.construction.model;
 
 public class Country {
-    private final long id;
     private String countryName;
-    private String postalCode;
+    private Long postalCode;
 
-    public Country(long id, String countryName, String postalCode) {
-        this.id = id;
+    public Country(String countryName, Long postalCode) {
         this.countryName = countryName;
         this.postalCode = postalCode;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getCountryName() {
@@ -23,11 +17,11 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public String getPostalCode() {
+    public Long getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(String postalCode) {
+    public void setPostalCode(Long postalCode) {
         this.postalCode = postalCode;
     }
 }

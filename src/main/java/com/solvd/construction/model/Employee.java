@@ -1,20 +1,23 @@
 package com.solvd.construction.model;
 
 public class Employee {
-    private final long id;
+    private long id;
     private String firstName;
     private String lastName;
-    private Position position;
+    private Long positionId;
 
-    public Employee(long id, String firstName, String lastName, Position position) {
-        this.id = id;
+    public Employee(String firstName, String lastName, Long positionId) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.position = position;
+        this.positionId = positionId;
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -33,11 +36,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Position getPosition() {
-        return position;
+    public Long getPositionId() {
+        return positionId;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setPositionId(Long positionId) {
+        this.positionId = positionId;
     }
 }

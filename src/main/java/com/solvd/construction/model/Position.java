@@ -3,12 +3,11 @@ package com.solvd.construction.model;
 import java.math.BigDecimal;
 
 public class Position {
-    private final long id;
+    private long id;
     private String positionName;
     private BigDecimal monthsSalary;
 
-    public Position(long id, String positionName, BigDecimal monthsSalary) {
-        this.id = id;
+    public Position(String positionName, BigDecimal monthsSalary) {
         this.positionName = positionName;
         this.monthsSalary = monthsSalary;
     }

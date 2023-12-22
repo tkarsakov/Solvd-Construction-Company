@@ -1,11 +1,10 @@
 package com.solvd.construction.model;
 
 public class MaterialName {
-    private final long id;
+    private long id;
     private String materialName;
 
-    public MaterialName(long id, String materialName) {
-        this.id = id;
+    public MaterialName(String materialName) {
         this.materialName = materialName;
     }
 

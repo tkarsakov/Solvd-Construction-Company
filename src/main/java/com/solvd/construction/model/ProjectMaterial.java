@@ -3,31 +3,41 @@ package com.solvd.construction.model;
 import java.math.BigDecimal;
 
 public class ProjectMaterial {
-    private final long id;
-    private SuppliedMaterial suppliedMaterial;
+    private long id;
+    private Long suppliedMaterialId;
     private BigDecimal materialAmount;
-    private Project project;
+    private Long projectId;
     private String measure;
 
-    public ProjectMaterial(long id, SuppliedMaterial suppliedMaterial, BigDecimal materialAmount,
-                           Project project, String measure) {
-        this.id = id;
-        this.suppliedMaterial = suppliedMaterial;
+    public ProjectMaterial(Long suppliedMaterialId, BigDecimal materialAmount, Long projectId, String measure) {
+        this.suppliedMaterialId = suppliedMaterialId;
         this.materialAmount = materialAmount;
-        this.project = project;
+        this.projectId = projectId;
         this.measure = measure;
+    }
+
+    public Long getSuppliedMaterialId() {
+        return suppliedMaterialId;
+    }
+
+    public void setSuppliedMaterialId(Long suppliedMaterialId) {
+        this.suppliedMaterialId = suppliedMaterialId;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 
     public long getId() {
         return id;
     }
 
-    public SuppliedMaterial getSuppliedMaterial() {
-        return suppliedMaterial;
-    }
-
-    public void setSuppliedMaterial(SuppliedMaterial suppliedMaterial) {
-        this.suppliedMaterial = suppliedMaterial;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public BigDecimal getMaterialAmount() {
@@ -38,13 +48,6 @@ public class ProjectMaterial {
         this.materialAmount = materialAmount;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
 
     public String getMeasure() {
         return measure;
