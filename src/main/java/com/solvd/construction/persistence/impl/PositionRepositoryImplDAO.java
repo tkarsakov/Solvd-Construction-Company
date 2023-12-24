@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PositionRepositoryImpl extends ModelRepositoryImpl<Position> implements PositionRepository {
+public class PositionRepositoryImplDAO extends ModelRepositoryImpl<Position> implements PositionRepository {
     private final String TABLE_NAME = "positions";
     private final String[] TABLE_COLUMNS = {"position_name", "months_salary"};
     private final int[] FIELD_TYPES = {Types.VARCHAR, Types.DECIMAL};
@@ -49,6 +49,7 @@ public class PositionRepositoryImpl extends ModelRepositoryImpl<Position> implem
     public Optional<Position> getOptionalOfModel(ResultSet resultSet) throws SQLException {
         return Optional.of(
                 new Position(
+                        resultSet.getLong(1),
                         resultSet.getString(TABLE_COLUMNS[0]),
                         resultSet.getBigDecimal(TABLE_COLUMNS[1]))
         );
@@ -60,6 +61,7 @@ public class PositionRepositoryImpl extends ModelRepositoryImpl<Position> implem
         while (resultSet.next()) {
             positions.add(
                     new Position(
+                            resultSet.getLong(1),
                             resultSet.getString(TABLE_COLUMNS[0]),
                             resultSet.getBigDecimal(TABLE_COLUMNS[1])
                     )

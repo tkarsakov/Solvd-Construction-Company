@@ -1,22 +1,25 @@
 package com.solvd.construction.model;
 
-public class Employee {
-    private long id;
+public class Employee implements Model {
+    private Long id;
     private String firstName;
     private String lastName;
     private Long positionId;
 
-    public Employee(String firstName, String lastName, Long positionId) {
+    public Employee(Long id, String firstName, String lastName, Long positionId) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.positionId = positionId;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    @Override
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeRepositoryImpl extends ModelRepositoryImpl<Employee> implements EmployeeRepository {
+public class EmployeeRepositoryImplDAO extends ModelRepositoryImpl<Employee> implements EmployeeRepository {
     private final int[] FIELD_TYPES = {Types.VARCHAR, Types.VARCHAR, Types.BIGINT};
     private final String TABLE_NAME = "employees";
     private final String[] TABLE_COLUMNS = {"first_name", "last_name", "position_id"};
@@ -23,7 +23,9 @@ public class EmployeeRepositoryImpl extends ModelRepositoryImpl<Employee> implem
     @Override
     public Optional<Employee> getOptionalOfModel(ResultSet resultSet) throws SQLException {
         return Optional.of(
-                new Employee(resultSet.getString(TABLE_COLUMNS[0]),
+                new Employee(
+                        resultSet.getLong(1),
+                        resultSet.getString(TABLE_COLUMNS[0]),
                         resultSet.getString(TABLE_COLUMNS[1]),
                         resultSet.getLong(TABLE_COLUMNS[2]))
         );
@@ -34,7 +36,9 @@ public class EmployeeRepositoryImpl extends ModelRepositoryImpl<Employee> implem
         List<Employee> employeeList = new ArrayList<>();
         while (resultSet.next()) {
             employeeList.add(
-                    new Employee(resultSet.getString(TABLE_COLUMNS[0]),
+                    new Employee(
+                            resultSet.getLong(1),
+                            resultSet.getString(TABLE_COLUMNS[0]),
                             resultSet.getString(TABLE_COLUMNS[1]),
                             resultSet.getLong(TABLE_COLUMNS[2]))
             );

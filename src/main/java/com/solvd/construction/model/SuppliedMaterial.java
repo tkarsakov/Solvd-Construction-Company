@@ -2,37 +2,43 @@ package com.solvd.construction.model;
 
 import java.math.BigDecimal;
 
-public class SuppliedMaterial {
-    private final long id;
-    private MaterialName materialName;
-    private Supplier supplier;
+public class SuppliedMaterial implements Model {
+    private Long id;
+    private Long materialNameId;
+    private Long supplierId;
     private BigDecimal price;
 
-    public SuppliedMaterial(long id, MaterialName materialName, Supplier supplier, BigDecimal price) {
+    public SuppliedMaterial(Long id, Long materialNameId, Long supplierId, BigDecimal price) {
         this.id = id;
-        this.materialName = materialName;
-        this.supplier = supplier;
+        this.materialNameId = materialNameId;
+        this.supplierId = supplierId;
         this.price = price;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public MaterialName getMaterialName() {
-        return materialName;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setMaterialName(MaterialName materialName) {
-        this.materialName = materialName;
+    public Long getMaterialNameId() {
+        return materialNameId;
     }
 
-    public Supplier getSupplier() {
-        return supplier;
+    public void setMaterialNameId(Long materialNameId) {
+        this.materialNameId = materialNameId;
     }
 
-    public void setSupplier(Supplier supplier) {
-        this.supplier = supplier;
+    public Long getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(Long supplierId) {
+        this.supplierId = supplierId;
     }
 
     public BigDecimal getPrice() {

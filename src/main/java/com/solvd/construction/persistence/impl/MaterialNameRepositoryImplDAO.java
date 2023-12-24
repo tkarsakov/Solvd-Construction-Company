@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class MaterialNameRepositoryImpl extends ModelRepositoryImpl<MaterialName> implements MaterialNameRepository {
+public class MaterialNameRepositoryImplDAO extends ModelRepositoryImpl<MaterialName> implements MaterialNameRepository {
     private final String TABLE_NAME = "material_names";
     private final String[] TABLE_COLUMNS = {"material_name"};
     private final int[] FIELD_TYPES = {Types.VARCHAR};
@@ -48,7 +48,9 @@ public class MaterialNameRepositoryImpl extends ModelRepositoryImpl<MaterialName
     @Override
     public Optional<MaterialName> getOptionalOfModel(ResultSet resultSet) throws SQLException {
         return Optional.of(
-                new MaterialName(resultSet.getString(TABLE_COLUMNS[0]))
+                new MaterialName(
+                        resultSet.getLong(1),
+                        resultSet.getString(TABLE_COLUMNS[0]))
         );
     }
 
@@ -57,7 +59,9 @@ public class MaterialNameRepositoryImpl extends ModelRepositoryImpl<MaterialName
         List<MaterialName> materialNames = new ArrayList<>();
         while (resultSet.next()) {
             materialNames.add(
-                    new MaterialName(resultSet.getString(TABLE_COLUMNS[0]))
+                    new MaterialName(
+                            resultSet.getLong(1),
+                            resultSet.getString(TABLE_COLUMNS[0]))
             );
         }
         return materialNames;

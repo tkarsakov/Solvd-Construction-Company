@@ -1,20 +1,26 @@
 package com.solvd.construction.model;
 
-public class Supplier {
-    private final long id;
+public class Supplier implements Model {
+    private Long id;
     private String supplierName;
     private String supplierEmail;
-    private Country country;
+    private Long countryId;
 
-    public Supplier(long id, String supplierName, String supplierEmail, Country country) {
+    public Supplier(long id, String supplierName, String supplierEmail, Long countryId) {
         this.id = id;
         this.supplierName = supplierName;
         this.supplierEmail = supplierEmail;
-        this.country = country;
+        this.countryId = countryId;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSupplierName() {
@@ -33,11 +39,11 @@ public class Supplier {
         this.supplierEmail = supplierEmail;
     }
 
-    public Country getCountry() {
-        return country;
+    public Long getCountryId() {
+        return countryId;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setCountryId(Long countryId) {
+        this.countryId = countryId;
     }
 }

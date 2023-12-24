@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ProjectMaterialRepositoryImpl extends ModelRepositoryImpl<ProjectMaterial> implements ProjectMaterialRepository {
+public class ProjectMaterialRepositoryImplDAO extends ModelRepositoryImpl<ProjectMaterial> implements ProjectMaterialRepository {
     private final String TABLE_NAME = "project_materials";
     private final String[] TABLE_COLUMNS = {"supplied_material_id", "material_amount", "project_id", "measure"};
     private final int[] FIELD_TYPES = {Types.BIGINT, Types.DECIMAL, Types.BIGINT, Types.VARCHAR};
@@ -50,6 +50,7 @@ public class ProjectMaterialRepositoryImpl extends ModelRepositoryImpl<ProjectMa
     public Optional<ProjectMaterial> getOptionalOfModel(ResultSet resultSet) throws SQLException {
         return Optional.of(
                 new ProjectMaterial(
+                        resultSet.getLong(1),
                         resultSet.getLong(TABLE_COLUMNS[0]),
                         resultSet.getBigDecimal(TABLE_COLUMNS[1]),
                         resultSet.getLong(TABLE_COLUMNS[2]),
@@ -64,6 +65,7 @@ public class ProjectMaterialRepositoryImpl extends ModelRepositoryImpl<ProjectMa
         while (resultSet.next()) {
             projectMaterials.add(
                     new ProjectMaterial(
+                            resultSet.getLong(1),
                             resultSet.getLong(TABLE_COLUMNS[0]),
                             resultSet.getBigDecimal(TABLE_COLUMNS[1]),
                             resultSet.getLong(TABLE_COLUMNS[2]),

@@ -1,5 +1,7 @@
 package com.solvd.construction.persistence.impl;
 
+import com.solvd.construction.model.Model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ModelRepositoryImpl<T> extends BaseRepositoryImpl {
+public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositoryImpl {
 
     public abstract Object[] getModelParams(T t);
 
@@ -57,7 +59,10 @@ public abstract class ModelRepositoryImpl<T> extends BaseRepositoryImpl {
         for (int i = 0; i < TABLE_COLUMNS.length - 1; i++) {
             sql.append(TABLE_COLUMNS[i]).append(" = ?, ");
         }
-        sql.append(TABLE_COLUMNS[TABLE_COLUMNS.length - 1]).append(" = ?;");
+        sql.append(TABLE_COLUMNS[TABLE_COLUMNS.length - 1]).append(" = ?")
+                .append(" WHERE ")
+                .append("id = ")
+                .append(t.getId());
         Object[] params = getModelParams(t);
         super.baseUpdate(sql.toString(), params, FIELD_TYPES);
     }

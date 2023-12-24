@@ -2,18 +2,25 @@ package com.solvd.construction.model;
 
 import java.math.BigDecimal;
 
-public class Position {
-    private long id;
+public class Position implements Model {
+    private Long id;
     private String positionName;
     private BigDecimal monthsSalary;
 
-    public Position(String positionName, BigDecimal monthsSalary) {
+    public Position(Long id, String positionName, BigDecimal monthsSalary) {
+        this.id = id;
         this.positionName = positionName;
         this.monthsSalary = monthsSalary;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getPositionName() {

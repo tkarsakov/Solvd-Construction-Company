@@ -2,14 +2,15 @@ package com.solvd.construction.model;
 
 import java.math.BigDecimal;
 
-public class ProjectMaterial {
-    private long id;
+public class ProjectMaterial implements Model {
+    private Long id;
     private Long suppliedMaterialId;
     private BigDecimal materialAmount;
     private Long projectId;
     private String measure;
 
-    public ProjectMaterial(Long suppliedMaterialId, BigDecimal materialAmount, Long projectId, String measure) {
+    public ProjectMaterial(Long id, Long suppliedMaterialId, BigDecimal materialAmount, Long projectId, String measure) {
+        this.id = id;
         this.suppliedMaterialId = suppliedMaterialId;
         this.materialAmount = materialAmount;
         this.projectId = projectId;
@@ -32,8 +33,14 @@ public class ProjectMaterial {
         this.projectId = projectId;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setId(long id) {

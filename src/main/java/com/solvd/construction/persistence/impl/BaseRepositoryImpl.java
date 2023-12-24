@@ -28,7 +28,7 @@ public abstract class BaseRepositoryImpl {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Create operation failed");
         } finally {
-            setAutoCommitToFalse(connection);
+            setAutoCommitToTrue(connection);
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
@@ -49,7 +49,7 @@ public abstract class BaseRepositoryImpl {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Update query failed");
         } finally {
-            setAutoCommitToFalse(connection);
+            setAutoCommitToTrue(connection);
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
@@ -86,11 +86,7 @@ public abstract class BaseRepositoryImpl {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Delete operation failed");
         } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e1) {
-                LOGGER.fatal(e1.getMessage());
-            }
+            setAutoCommitToTrue(connection);
             CONNECTION_POOL.releaseConnection(connection);
         }
     }
@@ -104,7 +100,7 @@ public abstract class BaseRepositoryImpl {
         }
     }
 
-    private void setAutoCommitToFalse(Connection connection) {
+    private void setAutoCommitToTrue(Connection connection) {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e2) {

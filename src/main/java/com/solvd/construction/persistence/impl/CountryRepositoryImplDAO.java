@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CountryRepositoryImpl extends ModelRepositoryImpl<Country> implements CountryRepository {
+public class CountryRepositoryImplDAO extends ModelRepositoryImpl<Country> implements CountryRepository {
     private final int[] FIELD_TYPES = {Types.VARCHAR, Types.BIGINT};
     private final String TABLE_NAME = "countries";
     private final String[] TABLE_COLUMNS = {"country_name", "postal_code"};
@@ -48,7 +48,9 @@ public class CountryRepositoryImpl extends ModelRepositoryImpl<Country> implemen
     @Override
     public Optional<Country> getOptionalOfModel(ResultSet resultSet) throws SQLException {
         return Optional.of(
-                new Country(resultSet.getString(TABLE_COLUMNS[0]),
+                new Country(
+                        resultSet.getLong(1),
+                        resultSet.getString(TABLE_COLUMNS[0]),
                         resultSet.getLong(TABLE_COLUMNS[1]))
         );
     }
@@ -58,7 +60,9 @@ public class CountryRepositoryImpl extends ModelRepositoryImpl<Country> implemen
         List<Country> countries = new ArrayList<>();
         while (resultSet.next()) {
             countries.add(
-                    new Country(resultSet.getString(TABLE_COLUMNS[0]),
+                    new Country(
+                            resultSet.getLong(1),
+                            resultSet.getString(TABLE_COLUMNS[0]),
                             resultSet.getLong(TABLE_COLUMNS[1]))
             );
         }

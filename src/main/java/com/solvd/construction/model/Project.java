@@ -3,28 +3,42 @@ package com.solvd.construction.model;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class Project {
-    private final long id;
+public class Project implements Model {
+    private Long id;
     private Timestamp startDate;
     private Timestamp finishDate;
-    private Client client;
+    private Long client_id;
     private long floors;
-    private boolean longeriorWork;
+    private boolean interiorWork;
     private BigDecimal budget;
 
-    public Project(long id, Timestamp startDate, Timestamp finishDate, Client client,
-                   long floors, boolean longeriorWork, BigDecimal budget) {
+    public Project(long id, Timestamp startDate, Timestamp finishDate, Long client_id,
+                   long floors, boolean interiorWork, BigDecimal budget) {
         this.id = id;
         this.startDate = startDate;
         this.finishDate = finishDate;
-        this.client = client;
+        this.client_id = client_id;
         this.floors = floors;
-        this.longeriorWork = longeriorWork;
+        this.interiorWork = interiorWork;
         this.budget = budget;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isInteriorWork() {
+        return interiorWork;
+    }
+
+    public void setInteriorWork(boolean interiorWork) {
+        this.interiorWork = interiorWork;
     }
 
     public Timestamp getStartDate() {
@@ -43,12 +57,12 @@ public class Project {
         this.finishDate = finishDate;
     }
 
-    public Client getClient() {
-        return client;
+    public Long getClient_id() {
+        return client_id;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
     }
 
     public long getFloors() {
@@ -57,14 +71,6 @@ public class Project {
 
     public void setFloors(long floors) {
         this.floors = floors;
-    }
-
-    public boolean islongeriorWork() {
-        return longeriorWork;
-    }
-
-    public void setlongeriorWork(boolean longeriorWork) {
-        this.longeriorWork = longeriorWork;
     }
 
     public BigDecimal getBudget() {

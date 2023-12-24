@@ -1,12 +1,24 @@
 package com.solvd.construction.model;
 
-public class Country {
+public class Country implements Model {
+    private Long id;
     private String countryName;
     private Long postalCode;
 
-    public Country(String countryName, Long postalCode) {
+    public Country(Long id, String countryName, Long postalCode) {
+        this.id = id;
         this.countryName = countryName;
         this.postalCode = postalCode;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCountryName() {
