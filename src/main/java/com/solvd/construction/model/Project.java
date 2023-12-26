@@ -28,6 +28,18 @@ public class Project implements Model {
         this.budget = budget;
     }
 
+    public Project(Timestamp startDate, Timestamp finishDate, Client client, List<Employee> employeeList, List<ProjectMaterial> projectMaterials, Long deadline, Long floors, Boolean interiorWork, BigDecimal budget) {
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.client = client;
+        this.employeeList = employeeList;
+        this.projectMaterials = projectMaterials;
+        this.deadline = deadline;
+        this.floors = floors;
+        this.interiorWork = interiorWork;
+        this.budget = budget;
+    }
+
     @Override
     public Long getId() {
         return id;

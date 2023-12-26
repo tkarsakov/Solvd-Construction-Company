@@ -13,6 +13,11 @@ public class Position implements Model {
         this.monthsSalary = monthsSalary;
     }
 
+    public Position(String positionName, BigDecimal monthsSalary) {
+        this.positionName = positionName;
+        this.monthsSalary = monthsSalary;
+    }
+
     @Override
     public Long getId() {
         return id;

@@ -14,6 +14,12 @@ public class Client implements Model {
         this.countryId = countryId;
     }
 
+    public Client(String clientName, String clientEmail, Country country) {
+        this.clientName = clientName;
+        this.clientEmail = clientEmail;
+        this.country = country;
+    }
+
     @Override
     public Long getId() {
         return id;

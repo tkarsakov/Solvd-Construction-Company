@@ -5,13 +5,21 @@ import java.math.BigDecimal;
 public class SuppliedMaterial implements Model {
     private Long id;
     private Long materialNameId;
+    private MaterialName materialName;
     private Long supplierId;
+    private Supplier supplier;
     private BigDecimal price;
 
     public SuppliedMaterial(Long id, Long materialNameId, Long supplierId, BigDecimal price) {
         this.id = id;
         this.materialNameId = materialNameId;
         this.supplierId = supplierId;
+        this.price = price;
+    }
+
+    public SuppliedMaterial(MaterialName materialName, Supplier supplier, BigDecimal price) {
+        this.materialName = materialName;
+        this.supplier = supplier;
         this.price = price;
     }
 
@@ -47,5 +55,21 @@ public class SuppliedMaterial implements Model {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public MaterialName getMaterialName() {
+        return materialName;
+    }
+
+    public void setMaterialName(MaterialName materialName) {
+        this.materialName = materialName;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

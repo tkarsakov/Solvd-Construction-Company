@@ -14,6 +14,12 @@ public class Employee implements Model {
         this.positionId = positionId;
     }
 
+    public Employee(String firstName, String lastName, Position position) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.position = position;
+    }
+
     @Override
     public Long getId() {
         return id;

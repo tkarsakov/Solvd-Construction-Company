@@ -11,6 +11,11 @@ public class Country implements Model {
         this.postalCode = postalCode;
     }
 
+    public Country(String countryName, Long postalCode) {
+        this.countryName = countryName;
+        this.postalCode = postalCode;
+    }
+
     @Override
     public Long getId() {
         return id;

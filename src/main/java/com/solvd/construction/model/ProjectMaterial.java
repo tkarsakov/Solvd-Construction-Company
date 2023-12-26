@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class ProjectMaterial implements Model {
     private Long id;
     private Long suppliedMaterialId;
+    private SuppliedMaterial suppliedMaterial;
     private BigDecimal materialAmount;
     private Long projectId;
     private String measure;
@@ -14,6 +15,12 @@ public class ProjectMaterial implements Model {
         this.suppliedMaterialId = suppliedMaterialId;
         this.materialAmount = materialAmount;
         this.projectId = projectId;
+        this.measure = measure;
+    }
+
+    public ProjectMaterial(SuppliedMaterial suppliedMaterial, BigDecimal materialAmount, String measure) {
+        this.suppliedMaterial = suppliedMaterial;
+        this.materialAmount = materialAmount;
         this.measure = measure;
     }
 
@@ -62,5 +69,13 @@ public class ProjectMaterial implements Model {
 
     public void setMeasure(String measure) {
         this.measure = measure;
+    }
+
+    public SuppliedMaterial getSuppliedMaterial() {
+        return suppliedMaterial;
+    }
+
+    public void setSuppliedMaterial(SuppliedMaterial suppliedMaterial) {
+        this.suppliedMaterial = suppliedMaterial;
     }
 }

@@ -9,6 +9,10 @@ public class MaterialName implements Model {
         this.materialName = materialName;
     }
 
+    public MaterialName(String materialName) {
+        this.materialName = materialName;
+    }
+
     @Override
     public Long getId() {
         return id;

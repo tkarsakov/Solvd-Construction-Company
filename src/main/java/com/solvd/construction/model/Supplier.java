@@ -5,12 +5,19 @@ public class Supplier implements Model {
     private String supplierName;
     private String supplierEmail;
     private Long countryId;
+    private Country country;
 
     public Supplier(long id, String supplierName, String supplierEmail, Long countryId) {
         this.id = id;
         this.supplierName = supplierName;
         this.supplierEmail = supplierEmail;
         this.countryId = countryId;
+    }
+
+    public Supplier(String supplierName, String supplierEmail, Country country) {
+        this.supplierName = supplierName;
+        this.supplierEmail = supplierEmail;
+        this.country = country;
     }
 
     @Override
@@ -45,5 +52,13 @@ public class Supplier implements Model {
 
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }
