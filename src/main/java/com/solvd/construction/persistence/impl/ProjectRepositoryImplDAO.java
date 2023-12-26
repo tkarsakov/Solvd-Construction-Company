@@ -45,6 +45,11 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
     }
 
     @Override
+    public void setDeadline(Project project) {
+        project.setDeadline(super.getTimediffDaysBetweenStartDateAndFinishDate(project, TABLE_NAME));
+    }
+
+    @Override
     public Object[] getModelParams(Project project) {
         return new Object[]{project.getStartDate(), project.getClient_id(), project.getFinishDate(),
                 project.getFloors(), project.getBudget(), project.isInteriorWork()};
@@ -56,8 +61,8 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
                 new Project(
                         resultSet.getLong(1),
                         resultSet.getTimestamp(TABLE_COLUMNS[0]),
-                        resultSet.getTimestamp(TABLE_COLUMNS[1]),
-                        resultSet.getLong(TABLE_COLUMNS[2]),
+                        resultSet.getTimestamp(TABLE_COLUMNS[2]),
+                        resultSet.getLong(TABLE_COLUMNS[1]),
                         resultSet.getLong(TABLE_COLUMNS[3]),
                         resultSet.getBoolean(TABLE_COLUMNS[4]),
                         resultSet.getBigDecimal(TABLE_COLUMNS[5])

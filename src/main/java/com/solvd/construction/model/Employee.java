@@ -5,6 +5,7 @@ public class Employee implements Model {
     private String firstName;
     private String lastName;
     private Long positionId;
+    private Position position;
 
     public Employee(Long id, String firstName, String lastName, Long positionId) {
         this.id = id;
@@ -45,5 +46,13 @@ public class Employee implements Model {
 
     public void setPositionId(Long positionId) {
         this.positionId = positionId;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
     }
 }

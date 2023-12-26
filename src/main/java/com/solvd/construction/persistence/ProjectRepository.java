@@ -15,4 +15,6 @@ public interface ProjectRepository {
     void update(Project project);
 
     void deleteById(Long id);
+
+    void setDeadline(Project project);
 }

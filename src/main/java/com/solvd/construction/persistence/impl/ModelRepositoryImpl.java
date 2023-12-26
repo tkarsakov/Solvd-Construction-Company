@@ -29,7 +29,11 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
     public Optional<T> findById(Long id, String TABLE_NAME) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
         try (ResultSet resultSet = super.baseFindById(sql, id)) {
-            return getOptionalOfModel(resultSet);
+            if (resultSet.next()) {
+                return getOptionalOfModel(resultSet);
+            } else {
+                return Optional.empty();
+            }
         } catch (SQLException e) {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Cannot close ResultSet");
@@ -70,6 +74,25 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
     public void deleteById(Long id, String TABLE_NAME) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         super.baseDeleteById(sql, id);
+    }
+
+    public Long getTimediffDaysBetweenStartDateAndFinishDate(T t, String TABLE_NAME) {
+        String sql = "SELECT " +
+                "TIMESTAMPDIFF(DAY, start_date, finish_date) " +
+                "FROM " +
+                TABLE_NAME +
+                " WHERE id = ?";
+        try (ResultSet resultSet = super.baseFindById(sql, t.getId())) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            } else {
+                throw new RuntimeException("Cannot determine deadline for project. Check start_date and finish_date " +
+                        "values");
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal(e.getMessage());
+            throw new RuntimeException("Failed to close ResultSet");
+        }
     }
 
     public abstract Optional<T> getOptionalOfModel(ResultSet resultSet) throws SQLException;

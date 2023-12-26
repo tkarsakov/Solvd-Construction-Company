@@ -2,18 +2,23 @@ package com.solvd.construction.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Project implements Model {
     private Long id;
     private Timestamp startDate;
     private Timestamp finishDate;
     private Long client_id;
-    private long floors;
-    private boolean interiorWork;
+    private Client client;
+    private List<Employee> employeeList;
+    private List<ProjectMaterial> projectMaterials;
+    private Long deadline;
+    private Long floors;
+    private Boolean interiorWork;
     private BigDecimal budget;
 
-    public Project(long id, Timestamp startDate, Timestamp finishDate, Long client_id,
-                   long floors, boolean interiorWork, BigDecimal budget) {
+    public Project(Long id, Timestamp startDate, Timestamp finishDate, Long client_id,
+                   Long floors, Boolean interiorWork, BigDecimal budget) {
         this.id = id;
         this.startDate = startDate;
         this.client_id = client_id;
@@ -35,10 +40,6 @@ public class Project implements Model {
 
     public boolean isInteriorWork() {
         return interiorWork;
-    }
-
-    public void setInteriorWork(boolean interiorWork) {
-        this.interiorWork = interiorWork;
     }
 
     public Timestamp getStartDate() {
@@ -73,6 +74,10 @@ public class Project implements Model {
         this.floors = floors;
     }
 
+    public void setFloors(Long floors) {
+        this.floors = floors;
+    }
+
     public BigDecimal getBudget() {
         return budget;
     }
@@ -81,4 +86,47 @@ public class Project implements Model {
         this.budget = budget;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    public List<ProjectMaterial> getProjectMaterials() {
+        return projectMaterials;
+    }
+
+    public void setProjectMaterials(List<ProjectMaterial> projectMaterials) {
+        this.projectMaterials = projectMaterials;
+    }
+
+    public Long getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Long deadline) {
+        this.deadline = deadline;
+    }
+
+    public Boolean getInteriorWork() {
+        return interiorWork;
+    }
+
+    public void setInteriorWork(boolean interiorWork) {
+        this.interiorWork = interiorWork;
+    }
+
+    public void setInteriorWork(Boolean interiorWork) {
+        this.interiorWork = interiorWork;
+    }
 }
