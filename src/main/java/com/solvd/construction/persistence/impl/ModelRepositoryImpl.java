@@ -116,6 +116,25 @@ public abstract class ModelRepositoryImpl<T extends Model> {
         }
     }
 
+    public List<T> findAllByBigint(Long bigint, String TABLE_NAME, String TABLE_COLUMN) {
+        String sql = "SELECT * " +
+                "FROM " + TABLE_NAME +
+                " WHERE " + TABLE_COLUMN +
+                " = ?;";
+        Connection connection = baseAtomicOperations.CONNECTION_POOL.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, bigint);
+            preparedStatement.execute();
+            ResultSet resultSet = preparedStatement.getResultSet();
+            return getListOfModel(resultSet);
+        } catch (SQLException e) {
+            LOGGER.fatal(e.getMessage());
+            throw new RuntimeException("Failed while trying to SELECT by Long/Bigint");
+        } finally {
+            baseAtomicOperations.CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
     public abstract Optional<T> getOptionalOfModel(ResultSet resultSet) throws SQLException;
 
     public abstract List<T> getListOfModel(ResultSet resultSet) throws SQLException;

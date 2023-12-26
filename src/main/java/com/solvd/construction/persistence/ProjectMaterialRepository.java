@@ -15,4 +15,6 @@ public interface ProjectMaterialRepository {
     void update(ProjectMaterial projectMaterial);
 
     void deleteById(Long id);
+
+    List<ProjectMaterial> findAllByProjectId(Long id);
 }

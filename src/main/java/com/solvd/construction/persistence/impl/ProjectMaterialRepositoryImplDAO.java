@@ -41,6 +41,11 @@ public class ProjectMaterialRepositoryImplDAO extends ModelRepositoryImpl<Projec
     }
 
     @Override
+    public List<ProjectMaterial> findAllByProjectId(Long id) {
+        return super.findAllByBigint(id, TABLE_NAME, TABLE_COLUMNS[2]);
+    }
+
+    @Override
     public Object[] getModelParams(ProjectMaterial projectMaterial) {
         return new Object[]{projectMaterial.getSuppliedMaterialId(), projectMaterial.getMaterialAmount(),
                 projectMaterial.getProjectId(), projectMaterial.getMeasure()};
