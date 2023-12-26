@@ -12,6 +12,8 @@ public interface CountryRepository {
 
     List<Country> findAll();
 
+    Optional<Country> findByCountryName(String countryName);
+
     void update(Country country);
 
     void deleteById(Long id);

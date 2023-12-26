@@ -31,6 +31,11 @@ public class CountryRepositoryImplDAO extends ModelRepositoryImpl<Country> imple
     }
 
     @Override
+    public Optional<Country> findByCountryName(String countryName) {
+        return super.findByUniqueVarchar(countryName, TABLE_NAME, TABLE_COLUMNS[1]);
+    }
+
+    @Override
     public void update(Country country) {
         super.update(country, TABLE_NAME, TABLE_COLUMNS, FIELD_TYPES);
     }
