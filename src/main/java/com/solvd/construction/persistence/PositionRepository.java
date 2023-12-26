@@ -15,4 +15,6 @@ public interface PositionRepository {
     void update(Position position);
 
     void deleteById(Long id);
+
+    Optional<Position> findByPositionName(String positionName);
 }

@@ -1,6 +1,8 @@
 package com.solvd.construction.persistence.impl;
 
 import com.solvd.construction.model.Model;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +11,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositoryImpl {
+public abstract class ModelRepositoryImpl<T extends Model> {
+    public static final Logger LOGGER = LogManager.getLogger();
+    private final BaseAtomicOperations baseAtomicOperations = new BaseAtomicOperations();
 
     public abstract Object[] getModelParams(T t);
 
@@ -23,12 +27,12 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
                 .append("VALUES (");
         sql.append("?, ".repeat(TABLE_COLUMNS.length - 1)).append("?);");
         Object[] params = getModelParams(t);
-        super.baseCreate(t, sql.toString(), params, FIELD_TYPES);
+        baseAtomicOperations.baseCreate(t, sql.toString(), params, FIELD_TYPES);
     }
 
     public Optional<T> findById(Long id, String TABLE_NAME) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
-        try (ResultSet resultSet = super.baseFindById(sql, id)) {
+        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultById(sql, id)) {
             if (resultSet.next()) {
                 return getOptionalOfModel(resultSet);
             } else {
@@ -41,7 +45,7 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
     }
 
     public List<T> findAll(String TABLE_NAME) {
-        Connection connection = CONNECTION_POOL.getConnection();
+        Connection connection = baseAtomicOperations.CONNECTION_POOL.getConnection();
         String sql = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.execute();
@@ -51,7 +55,7 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Cannot execute statement");
         } finally {
-            CONNECTION_POOL.releaseConnection(connection);
+            baseAtomicOperations.CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
@@ -68,12 +72,12 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
                 .append("id = ")
                 .append(t.getId());
         Object[] params = getModelParams(t);
-        super.baseUpdate(sql.toString(), params, FIELD_TYPES);
+        baseAtomicOperations.baseUpdate(sql.toString(), params, FIELD_TYPES);
     }
 
     public void deleteById(Long id, String TABLE_NAME) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
-        super.baseDeleteById(sql, id);
+        baseAtomicOperations.baseDeleteById(sql, id);
     }
 
     public Long getTimediffDaysBetweenStartDateAndFinishDate(T t, String TABLE_NAME) {
@@ -82,12 +86,29 @@ public abstract class ModelRepositoryImpl<T extends Model> extends BaseRepositor
                 "FROM " +
                 TABLE_NAME +
                 " WHERE id = ?";
-        try (ResultSet resultSet = super.baseFindById(sql, t.getId())) {
+        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultById(sql, t.getId())) {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
             } else {
                 throw new RuntimeException("Cannot determine deadline for project. Check start_date and finish_date " +
                         "values");
+            }
+        } catch (SQLException e) {
+            LOGGER.fatal(e.getMessage());
+            throw new RuntimeException("Failed to close ResultSet");
+        }
+    }
+
+    public Optional<T> findByUniqueVarchar(String query, String TABLE_NAME, String TABLE_COLUMN) {
+        String sql = "SELECT " +
+                "* " + "FROM " +
+                TABLE_NAME + " WHERE" +
+                TABLE_COLUMN + " = ?;";
+        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultByUniqueVarchar(sql, query)) {
+            if (resultSet.next()) {
+                return getOptionalOfModel(resultSet);
+            } else {
+                return Optional.empty();
             }
         } catch (SQLException e) {
             LOGGER.fatal(e.getMessage());

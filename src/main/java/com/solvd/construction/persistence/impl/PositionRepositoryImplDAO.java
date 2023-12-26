@@ -41,6 +41,11 @@ public class PositionRepositoryImplDAO extends ModelRepositoryImpl<Position> imp
     }
 
     @Override
+    public Optional<Position> findByPositionName(String positionName) {
+        return super.findByUniqueVarchar(positionName, TABLE_NAME, TABLE_COLUMNS[0]);
+    }
+
+    @Override
     public Object[] getModelParams(Position position) {
         return new Object[]{position.getPositionName(), position.getMonthsSalary()};
     }

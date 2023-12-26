@@ -6,10 +6,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
-public abstract class BaseRepositoryImpl {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    protected final ConnectionPool CONNECTION_POOL = ConnectionPool.INSTANCE;
-
+public class BaseAtomicOperations {
+    public final ConnectionPool CONNECTION_POOL = ConnectionPool.INSTANCE;
+    private final Logger LOGGER = LogManager.getLogger();
 
     protected <T> void baseCreate(T t, String sql, Object[] parameters, int[] types) {
         Connection connection = CONNECTION_POOL.getConnection();
@@ -54,11 +53,26 @@ public abstract class BaseRepositoryImpl {
         }
     }
 
-    protected ResultSet baseFindById(String sql, Long id) {
+    protected ResultSet baseSelectSingleResultById(String sql, Long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setLong(1, id);
+            preparedStatement.execute();
+            return preparedStatement.getResultSet();
+        } catch (SQLException e) {
+            LOGGER.fatal(e.getMessage());
+            throw new RuntimeException("Cannot execute findById query");
+        } finally {
+            CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    protected ResultSet baseSelectSingleResultByUniqueVarchar(String sql, String query) {
+        Connection connection = CONNECTION_POOL.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, query);
             preparedStatement.execute();
             return preparedStatement.getResultSet();
         } catch (SQLException e) {
