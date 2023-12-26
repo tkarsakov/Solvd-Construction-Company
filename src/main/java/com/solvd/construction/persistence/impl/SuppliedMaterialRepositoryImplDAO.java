@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class SuppliedMaterialRepositoryImplDAO extends ModelRepositoryImpl<SuppliedMaterial> implements SuppliedMaterialRepository {
     private final String TABLE_NAME = "supplied_materials";
-    private final String[] TABLE_COLUMNS = {"material_name_id", "supplier_id", "price"};
+    private final String[] TABLE_COLUMNS = {"material_id", "supplier_id", "price"};
     private final int[] FIELD_TYPES = {Types.BIGINT, Types.BIGINT, Types.DECIMAL};
 
     @Override

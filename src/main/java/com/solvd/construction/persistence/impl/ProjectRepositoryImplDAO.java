@@ -13,10 +13,10 @@ import java.util.Optional;
 public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> implements ProjectRepository {
     private final String TABLE_NAME = "projects";
     private final String[] TABLE_COLUMNS = {
-            "start_date", "finish_date", "client_id", "floors", "interior_work", "budget"
+            "start_date", "client_id", "finish_date", "floors", "budget", "interior_work"
     };
     private final int[] FIELD_TYPES = {
-            Types.TIMESTAMP, Types.TIMESTAMP, Types.BIGINT, Types.BIGINT, Types.BOOLEAN, Types.DECIMAL
+            Types.TIMESTAMP, Types.BIGINT, Types.TIMESTAMP, Types.BIGINT, Types.DECIMAL, Types.BOOLEAN
     };
 
     @Override
@@ -46,7 +46,8 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
 
     @Override
     public Object[] getModelParams(Project project) {
-        return new Object[]{project.getStartDate(), project.getFinishDate(), project.getFloors()};
+        return new Object[]{project.getStartDate(), project.getClient_id(), project.getFinishDate(),
+                project.getFloors(), project.getBudget(), project.isInteriorWork()};
     }
 
     @Override

@@ -16,10 +16,10 @@ public class Project implements Model {
                    long floors, boolean interiorWork, BigDecimal budget) {
         this.id = id;
         this.startDate = startDate;
-        this.finishDate = finishDate;
         this.client_id = client_id;
-        this.floors = floors;
+        this.finishDate = finishDate;
         this.interiorWork = interiorWork;
+        this.floors = floors;
         this.budget = budget;
     }
 
@@ -80,4 +80,5 @@ public class Project implements Model {
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
     }
+
 }
