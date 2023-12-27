@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public abstract class ModelRepositoryImpl<T extends Model> {
     public static final Logger LOGGER = LogManager.getLogger();
-    private final BaseAtomicOperations baseAtomicOperations = new BaseAtomicOperations();
+    private final BaseAtomicOperations BASE_ATOMIC_OPERATIONS = new BaseAtomicOperations();
 
     public abstract Object[] getModelParams(T t);
 
@@ -27,12 +27,12 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 .append("VALUES (");
         sql.append("?, ".repeat(TABLE_COLUMNS.length - 1)).append("?);");
         Object[] params = getModelParams(t);
-        baseAtomicOperations.baseCreate(t, sql.toString(), params, FIELD_TYPES);
+        BASE_ATOMIC_OPERATIONS.baseCreate(t, sql.toString(), params, FIELD_TYPES);
     }
 
     public Optional<T> findById(Long id, String TABLE_NAME) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
-        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultById(sql, id)) {
+        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectSingleResultById(sql, id)) {
             if (resultSet.next()) {
                 return getOptionalOfModel(resultSet);
             } else {
@@ -45,7 +45,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
     }
 
     public List<T> findAll(String TABLE_NAME) {
-        Connection connection = baseAtomicOperations.CONNECTION_POOL.getConnection();
+        Connection connection = BASE_ATOMIC_OPERATIONS.CONNECTION_POOL.getConnection();
         String sql = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.execute();
@@ -55,7 +55,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Cannot execute statement");
         } finally {
-            baseAtomicOperations.CONNECTION_POOL.releaseConnection(connection);
+            BASE_ATOMIC_OPERATIONS.CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
@@ -72,12 +72,12 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 .append("id = ")
                 .append(t.getId());
         Object[] params = getModelParams(t);
-        baseAtomicOperations.baseUpdate(sql.toString(), params, FIELD_TYPES);
+        BASE_ATOMIC_OPERATIONS.baseUpdate(sql.toString(), params, FIELD_TYPES);
     }
 
     public void deleteById(Long id, String TABLE_NAME) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
-        baseAtomicOperations.baseDeleteById(sql, id);
+        BASE_ATOMIC_OPERATIONS.baseDeleteById(sql, id);
     }
 
     public Long getTimediffDaysBetweenStartDateAndFinishDate(T t, String TABLE_NAME) {
@@ -86,7 +86,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 "FROM " +
                 TABLE_NAME +
                 " WHERE id = ?";
-        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultById(sql, t.getId())) {
+        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectSingleResultById(sql, t.getId())) {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
             } else {
@@ -104,7 +104,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 "* " + "FROM " +
                 TABLE_NAME + " WHERE" +
                 TABLE_COLUMN + " = ?;";
-        try (ResultSet resultSet = baseAtomicOperations.baseSelectSingleResultByUniqueVarchar(sql, query)) {
+        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectSingleResultByUniqueVarchar(sql, query)) {
             if (resultSet.next()) {
                 return getOptionalOfModel(resultSet);
             } else {
@@ -121,7 +121,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 "FROM " + TABLE_NAME +
                 " WHERE " + TABLE_COLUMN +
                 " = ?;";
-        Connection connection = baseAtomicOperations.CONNECTION_POOL.getConnection();
+        Connection connection = BASE_ATOMIC_OPERATIONS.CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, bigint);
             preparedStatement.execute();
@@ -131,7 +131,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
             LOGGER.fatal(e.getMessage());
             throw new RuntimeException("Failed while trying to SELECT by Long/Bigint");
         } finally {
-            baseAtomicOperations.CONNECTION_POOL.releaseConnection(connection);
+            BASE_ATOMIC_OPERATIONS.CONNECTION_POOL.releaseConnection(connection);
         }
     }
 
