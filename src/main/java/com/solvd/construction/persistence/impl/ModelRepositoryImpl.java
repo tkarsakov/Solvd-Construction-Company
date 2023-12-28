@@ -140,9 +140,10 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 "FROM " + TABLE_NAME +
                 " JOIN " + MTM_TABLE +
                 " ON " + FOREIGN_KEY +
-                " = id" +
+                " = " + TABLE_NAME +
+                ".id" +
                 " WHERE " + MTM_COLUMN +
-                " = ?";
+                " = ? ";
         try {
             return getListOfModel(BASE_ATOMIC_OPERATIONS.baseSelectResultById(sql, id));
         } catch (SQLException e) {

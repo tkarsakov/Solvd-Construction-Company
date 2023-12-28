@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Project implements Model {
+    private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
+    private final BigDecimal INTERIOR_COST_PER_FLOOR = new BigDecimal("10000.00");
     private Long id;
     private Timestamp startDate;
     private Timestamp finishDate;
@@ -132,5 +134,71 @@ public class Project implements Model {
 
     public void setInteriorWork(Boolean interiorWork) {
         this.interiorWork = interiorWork;
+    }
+
+    public BigDecimal calculateEarnings() {
+        return null;
+    }
+
+    private BigDecimal getEmployeeSalaries() {
+        BigDecimal totalMonthSalary = new BigDecimal("0.00");
+        for (var employee : employeeList) {
+            totalMonthSalary = totalMonthSalary.add(employee.getPosition().getMonthsSalary());
+        }
+        return totalMonthSalary;
+    }
+
+    public String getCostsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Project ").append(id)
+                .append(" Deadline: ")
+                .append(this.getDeadline().toString())
+                .append(" Days")
+                .append("\n");
+
+        stringBuilder.append("EMPLOYEES: \n");
+        for (var employee : employeeList) {
+            stringBuilder.append(employee.getFirstName())
+                    .append(" ")
+                    .append(employee.getLastName())
+                    .append(" | Salary: ")
+                    .append(employee.getPosition().getMonthsSalary().toString())
+                    .append("\n");
+        }
+        BigDecimal totalMonthsSalary = getEmployeeSalaries();
+        stringBuilder.append("Total employee salary per month: ")
+                .append(totalMonthsSalary.toString()).append("\n");
+        BigDecimal totalSalary = totalMonthsSalary.multiply(new BigDecimal(this.getDeadline() / 30));
+        stringBuilder.append("Total employee salary for the project: ")
+                .append(totalSalary).append("\n");
+
+        stringBuilder.append("MATERIALS: \n");
+        BigDecimal totalMaterialCost = new BigDecimal("0.00");
+        for (var projectMaterial : projectMaterials) {
+            stringBuilder.append(projectMaterial.getSuppliedMaterial().getMaterialName().getMaterialName());
+            stringBuilder.append(" | Amount : ");
+            stringBuilder.append(projectMaterial.getMaterialAmount().toString()).append(" ")
+                    .append(projectMaterial.getMeasure());
+            stringBuilder.append(" | Price :");
+            stringBuilder.append(projectMaterial.getSuppliedMaterial().getPrice().toString()).append("\n");
+            totalMaterialCost = totalMaterialCost.add(projectMaterial.getMaterialAmount().multiply(projectMaterial.getSuppliedMaterial().getPrice()));
+        }
+        stringBuilder.append("Total material cost: ").append(totalMaterialCost).append("\n");
+
+        BigDecimal totalFloorCost = FLOOR_COST.multiply(new BigDecimal(this.floors));
+        stringBuilder.append("FLOORS: ").append(this.getFloors()).append(" | Total cost: ")
+                .append(totalFloorCost).append("\n");
+
+        BigDecimal totalInteriorWork = new BigDecimal("0.00");
+        if (this.interiorWork) {
+            totalInteriorWork = INTERIOR_COST_PER_FLOOR.multiply(new BigDecimal(this.floors));
+            stringBuilder.append("INTERIOR WORK for ").append(this.floors).append(" floors ");
+            stringBuilder.append(" | Total: ").append(totalInteriorWork).append("\n");
+        }
+
+        stringBuilder.append("______________________________________________________\n");
+        stringBuilder.append("TOTAL PROJECT COST: ").append(totalMaterialCost
+                .add(totalSalary).add(totalFloorCost).add(totalInteriorWork)).append("\n");
+        return stringBuilder.toString();
     }
 }

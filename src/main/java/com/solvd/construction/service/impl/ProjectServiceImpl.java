@@ -28,6 +28,19 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project create(Project project) {
         project.setId(null);
+        for (var employee : project.getEmployeeList()) {
+            if (employee.getId() == null) {
+                employeeService.create(employee);
+            }
+        }
+        project.getProjectMaterials().forEach(projectMaterial -> {
+            if (projectMaterial.getId() == null) {
+                projectMaterialService.create(projectMaterial);
+            }
+        });
+        if (project.getClient().getId() == null) {
+            clientService.create(project.getClient());
+        }
         projectRepository.create(project);
         return project;
     }
@@ -55,6 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setEmployeeList(
                     employeeService.retrieveAllByProjectId(project.getId())
             );
+            projectRepository.setDeadline(project);
         };
     }
 }
