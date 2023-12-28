@@ -14,6 +14,7 @@ public class ProjectMaterialServiceImpl implements ProjectMaterialService {
 
     public ProjectMaterialServiceImpl() {
         this.projectMaterialRepository = new ProjectMaterialRepositoryImplDAO();
+        this.suppliedMaterialService = new SuppliedMaterialServiceImpl();
     }
 
     @Override
@@ -25,6 +26,14 @@ public class ProjectMaterialServiceImpl implements ProjectMaterialService {
 
     @Override
     public List<ProjectMaterial> retrieveAllByProjectId(Long projectId) {
-        return projectMaterialRepository.findAllByProjectId(projectId);
+        List<ProjectMaterial> projectMaterials = projectMaterialRepository.findAllByProjectId(projectId);
+        for (var projectMaterial : projectMaterials) {
+            projectMaterial.setSuppliedMaterial(
+                    suppliedMaterialService
+                            .retrieveById(projectMaterial.getSuppliedMaterialId())
+                            .get()
+            );
+        }
+        return projectMaterials;
     }
 }

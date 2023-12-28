@@ -41,6 +41,11 @@ public class MaterialNameRepositoryImplDAO extends ModelRepositoryImpl<MaterialN
     }
 
     @Override
+    public Optional<MaterialName> findByMaterialName(String materialName) {
+        return super.findByUniqueVarchar(materialName, TABLE_NAME, TABLE_COLUMNS[0]);
+    }
+
+    @Override
     public Object[] getModelParams(MaterialName materialName) {
         return new Object[]{materialName.getMaterialName()};
     }

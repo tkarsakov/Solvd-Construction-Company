@@ -8,4 +8,6 @@ public interface MaterialNameService {
     MaterialName create(MaterialName materialName);
 
     Optional<MaterialName> retrieveById(Long id);
+
+    Optional<MaterialName> retrieveByMaterialName(String materialName);
 }

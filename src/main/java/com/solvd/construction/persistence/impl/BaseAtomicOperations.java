@@ -1,5 +1,6 @@
 package com.solvd.construction.persistence.impl;
 
+import com.solvd.construction.model.Model;
 import com.solvd.construction.persistence.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +11,7 @@ public class BaseAtomicOperations {
     public final ConnectionPool CONNECTION_POOL = ConnectionPool.INSTANCE;
     private final Logger LOGGER = LogManager.getLogger();
 
-    protected <T> void baseCreate(T t, String sql, Object[] parameters, int[] types) {
+    protected <T extends Model> void baseCreate(T t, String sql, Object[] parameters, int[] types) {
         Connection connection = CONNECTION_POOL.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
@@ -20,6 +21,7 @@ public class BaseAtomicOperations {
                 i++;
             }
             preparedStatement.executeUpdate();
+            t.setId(preparedStatement.getGeneratedKeys().getLong(1));
             connection.commit();
         } catch (SQLException e) {
             rollbackConnection(connection);

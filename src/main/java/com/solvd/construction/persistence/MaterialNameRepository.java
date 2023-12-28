@@ -15,4 +15,6 @@ public interface MaterialNameRepository {
     void update(MaterialName materialName);
 
     void deleteById(Long id);
+
+    Optional<MaterialName> findByMaterialName(String materialName);
 }

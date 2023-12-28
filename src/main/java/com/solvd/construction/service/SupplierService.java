@@ -8,4 +8,6 @@ public interface SupplierService {
     Supplier create(Supplier supplier);
 
     Optional<Supplier> retrieveById(Long id);
+
+    Optional<Supplier> retrieveBySupplierName(String supplierName);
 }

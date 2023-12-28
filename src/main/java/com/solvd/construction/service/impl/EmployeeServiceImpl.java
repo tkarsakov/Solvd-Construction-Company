@@ -20,6 +20,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee create(Employee employee) {
         employee.setId(null);
+        if (positionService.retrieveByPositionName(employee.getPosition().getPositionName()).isEmpty()) {
+            positionService.create(employee.getPosition());
+        }
         employeeRepository.create(employee);
         return null;
     }

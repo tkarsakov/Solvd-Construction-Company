@@ -15,4 +15,6 @@ public interface SupplierRepository {
     void update(Supplier supplier);
 
     void deleteById(Long id);
+
+    Optional<Supplier> findBySupplierName(String supplierName);
 }

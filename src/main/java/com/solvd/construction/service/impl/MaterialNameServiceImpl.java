@@ -16,11 +16,18 @@ public class MaterialNameServiceImpl implements MaterialNameService {
 
     @Override
     public MaterialName create(MaterialName materialName) {
-        return null;
+        materialName.setId(null);
+        materialNameRepository.create(materialName);
+        return materialName;
     }
 
     @Override
     public Optional<MaterialName> retrieveById(Long id) {
         return materialNameRepository.findById(id);
+    }
+
+    @Override
+    public Optional<MaterialName> retrieveByMaterialName(String materialName) {
+        return materialNameRepository.findByMaterialName(materialName);
     }
 }

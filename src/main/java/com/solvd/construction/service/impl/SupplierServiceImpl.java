@@ -7,6 +7,7 @@ import com.solvd.construction.service.CountryService;
 import com.solvd.construction.service.SupplierService;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
@@ -21,7 +22,7 @@ public class SupplierServiceImpl implements SupplierService {
     public Supplier create(Supplier supplier) {
         supplier.setId(null);
         if (countryService.retrieveByCountryName(supplier.getCountry().getCountryName()).isEmpty()) {
-            countryService.create(supplier.getCountry());
+            supplier.setCountryId(countryService.create(supplier.getCountry()).getId());
         }
         supplierRepository.create(supplier);
         return supplier;
@@ -29,6 +30,21 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Optional<Supplier> retrieveById(Long id) {
-        return supplierRepository.findById(id);
+        Optional<Supplier> optionalSupplier = supplierRepository.findById(id);
+        optionalSupplier.ifPresent(setFields());
+        return optionalSupplier;
+    }
+
+    @Override
+    public Optional<Supplier> retrieveBySupplierName(String supplierName) {
+        Optional<Supplier> optionalSupplier = supplierRepository.findBySupplierName(supplierName);
+        optionalSupplier.ifPresent(setFields());
+        return optionalSupplier;
+    }
+
+    private Consumer<Supplier> setFields() {
+        return supplier -> supplier.setCountry(
+                countryService.retrieveById(supplier.getCountryId()).orElse(null)
+        );
     }
 }

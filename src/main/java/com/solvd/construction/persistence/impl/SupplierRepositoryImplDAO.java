@@ -41,6 +41,11 @@ public class SupplierRepositoryImplDAO extends ModelRepositoryImpl<Supplier> imp
     }
 
     @Override
+    public Optional<Supplier> findBySupplierName(String supplierName) {
+        return super.findByUniqueVarchar(supplierName, TABLE_NAME, TABLE_COLUMNS[0]);
+    }
+
+    @Override
     public Object[] getModelParams(Supplier supplier) {
         return new Object[]{supplier.getSupplierName(), supplier.getSupplierEmail(), supplier.getCountryId()};
     }

@@ -21,7 +21,7 @@ public class ClientServiceImpl implements ClientService {
     public Client create(Client client) {
         client.setId(null);
         if (countryService.retrieveByCountryName(client.getCountry().getCountryName()).isEmpty()) {
-            countryService.create(client.getCountry());
+            client.setCountryId(countryService.create(client.getCountry()).getId());
         }
         clientRepository.create(client);
         return client;

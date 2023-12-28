@@ -50,10 +50,6 @@ public class ProjectMaterial implements Model {
         this.id = id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public BigDecimal getMaterialAmount() {
         return materialAmount;
     }
