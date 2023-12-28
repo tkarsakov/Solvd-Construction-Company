@@ -13,6 +13,8 @@ import java.util.Optional;
 public class EmployeeRepositoryImplDAO extends ModelRepositoryImpl<Employee> implements EmployeeRepository {
     private final int[] FIELD_TYPES = {Types.VARCHAR, Types.VARCHAR, Types.BIGINT};
     private final String TABLE_NAME = "employees";
+    private final String MTM_TABLE = "work_assignments";
+    private final String[] MTM_COLUMNS = {"worker_id", "project_id"};
     private final String[] TABLE_COLUMNS = {"first_name", "last_name", "position_id"};
 
     @Override
@@ -69,5 +71,10 @@ public class EmployeeRepositoryImplDAO extends ModelRepositoryImpl<Employee> imp
     @Override
     public void deleteById(Long id) {
         super.deleteById(id, TABLE_NAME);
+    }
+
+    @Override
+    public List<Employee> findAllByProjectId(Long projectId) {
+        return super.findAllByIdInManyToManyTable(projectId, TABLE_NAME, MTM_TABLE, MTM_COLUMNS[1], MTM_COLUMNS[0]);
     }
 }

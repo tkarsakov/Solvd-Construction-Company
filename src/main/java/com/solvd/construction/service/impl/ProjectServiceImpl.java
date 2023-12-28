@@ -9,6 +9,8 @@ import com.solvd.construction.service.ProjectMaterialService;
 import com.solvd.construction.service.ProjectService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
@@ -25,16 +27,34 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project create(Project project) {
-        return null;
+        project.setId(null);
+        projectRepository.create(project);
+        return project;
     }
 
     @Override
     public List<Project> retrieveAll() {
-        return null;
+        return projectRepository.findAll().stream().peek(setFields()).toList();
     }
 
     @Override
-    public Project retrieveById(Long id) {
-        return null;
+    public Optional<Project> retrieveById(Long id) {
+        Optional<Project> optionalProject = projectRepository.findById(id);
+        optionalProject.ifPresent(setFields());
+        return optionalProject;
+    }
+
+    private Consumer<Project> setFields() {
+        return project -> {
+            project.setClient(
+                    clientService.retrieveById(project.getClient_id()).orElse(null)
+            );
+            project.setProjectMaterials(
+                    projectMaterialService.retrieveAllByProjectId(project.getId())
+            );
+            project.setEmployeeList(
+                    employeeService.retrieveAllByProjectId(project.getId())
+            );
+        };
     }
 }

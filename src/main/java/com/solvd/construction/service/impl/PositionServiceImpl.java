@@ -31,4 +31,9 @@ public class PositionServiceImpl implements PositionService {
     public Optional<Position> retrieveByPositionName(String positionName) {
         return positionRepository.findByPositionName(positionName);
     }
+
+    @Override
+    public Optional<Position> retrieveById(Long id) {
+        return positionRepository.findById(id);
+    }
 }

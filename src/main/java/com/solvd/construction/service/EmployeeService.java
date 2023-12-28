@@ -8,4 +8,6 @@ public interface EmployeeService {
     Employee create(Employee employee);
 
     List<Employee> retrieveAll();
+
+    List<Employee> retrieveAllByProjectId(Long id);
 }

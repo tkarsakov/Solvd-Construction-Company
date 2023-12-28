@@ -15,4 +15,6 @@ public interface EmployeeRepository {
     void update(Employee employee);
 
     void deleteById(Long id);
+
+    List<Employee> findAllByProjectId(Long projectId);
 }

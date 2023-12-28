@@ -11,4 +11,6 @@ public interface PositionService {
     List<Position> retrieveAll();
 
     Optional<Position> retrieveByPositionName(String positionName);
+
+    Optional<Position> retrieveById(Long id);
 }

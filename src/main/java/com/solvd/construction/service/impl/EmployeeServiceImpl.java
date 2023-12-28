@@ -7,6 +7,7 @@ import com.solvd.construction.service.EmployeeService;
 import com.solvd.construction.service.PositionService;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -29,6 +30,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> retrieveAll() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAll().stream().peek(setFields()).toList();
+    }
+
+    @Override
+    public List<Employee> retrieveAllByProjectId(Long projectId) {
+        return employeeRepository.findAllByProjectId(projectId).stream().peek(setFields()).toList();
+    }
+
+    private Consumer<Employee> setFields() {
+        return employee -> employee.setPosition(positionService.retrieveById(employee.getPositionId()).orElse(null));
     }
 }

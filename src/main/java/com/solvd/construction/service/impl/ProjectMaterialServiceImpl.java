@@ -20,6 +20,9 @@ public class ProjectMaterialServiceImpl implements ProjectMaterialService {
     @Override
     public ProjectMaterial create(ProjectMaterial projectMaterial) {
         projectMaterial.setId(null);
+        if (suppliedMaterialService.retrieveById(projectMaterial.getSuppliedMaterial().getId()).isEmpty()) {
+            suppliedMaterialService.create(projectMaterial.getSuppliedMaterial());
+        }
         projectMaterialRepository.create(projectMaterial);
         return projectMaterial;
     }
@@ -31,7 +34,7 @@ public class ProjectMaterialServiceImpl implements ProjectMaterialService {
             projectMaterial.setSuppliedMaterial(
                     suppliedMaterialService
                             .retrieveById(projectMaterial.getSuppliedMaterialId())
-                            .get()
+                            .orElse(null)
             );
         }
         return projectMaterials;

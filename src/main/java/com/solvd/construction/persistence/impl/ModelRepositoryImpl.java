@@ -32,7 +32,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
 
     public Optional<T> findById(Long id, String TABLE_NAME) {
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?";
-        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectSingleResultById(sql, id)) {
+        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectResultById(sql, id)) {
             if (resultSet.next()) {
                 return getOptionalOfModel(resultSet);
             } else {
@@ -86,7 +86,7 @@ public abstract class ModelRepositoryImpl<T extends Model> {
                 "FROM " +
                 TABLE_NAME +
                 " WHERE id = ?";
-        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectSingleResultById(sql, t.getId())) {
+        try (ResultSet resultSet = BASE_ATOMIC_OPERATIONS.baseSelectResultById(sql, t.getId())) {
             if (resultSet.next()) {
                 return resultSet.getLong(1);
             } else {
@@ -132,6 +132,22 @@ public abstract class ModelRepositoryImpl<T extends Model> {
             throw new RuntimeException("Failed while trying to SELECT by Long/Bigint");
         } finally {
             BASE_ATOMIC_OPERATIONS.CONNECTION_POOL.releaseConnection(connection);
+        }
+    }
+
+    public List<T> findAllByIdInManyToManyTable(Long id, String TABLE_NAME, String MTM_TABLE, String MTM_COLUMN, String FOREIGN_KEY) {
+        String sql = "SELECT * " +
+                "FROM " + TABLE_NAME +
+                " JOIN " + MTM_TABLE +
+                " ON " + FOREIGN_KEY +
+                " = id" +
+                " WHERE " + MTM_COLUMN +
+                " = ?";
+        try {
+            return getListOfModel(BASE_ATOMIC_OPERATIONS.baseSelectResultById(sql, id));
+        } catch (SQLException e) {
+            LOGGER.fatal(e.getMessage());
+            throw new RuntimeException("Failed while getting ResultSet from Many-to-many table");
         }
     }
 

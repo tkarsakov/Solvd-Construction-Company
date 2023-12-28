@@ -7,6 +7,7 @@ import com.solvd.construction.service.ClientService;
 import com.solvd.construction.service.CountryService;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
@@ -29,6 +30,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Optional<Client> retrieveById(Long id) {
-        return clientRepository.findById(id);
+        Optional<Client> optionalClient = clientRepository.findById(id);
+        optionalClient.ifPresent(setFields());
+        return optionalClient;
+    }
+
+    private Consumer<Client> setFields() {
+        return client -> client.setCountry(countryService.retrieveById(client.getCountryId()).orElse(null));
     }
 }

@@ -55,7 +55,7 @@ public class BaseAtomicOperations {
         }
     }
 
-    protected ResultSet baseSelectSingleResultById(String sql, Long id) {
+    protected ResultSet baseSelectResultById(String sql, Long id) {
         Connection connection = CONNECTION_POOL.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);

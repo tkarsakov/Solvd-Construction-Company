@@ -82,10 +82,6 @@ public class Project implements Model {
         return floors;
     }
 
-    public void setFloors(long floors) {
-        this.floors = floors;
-    }
-
     public void setFloors(Long floors) {
         this.floors = floors;
     }
@@ -132,10 +128,6 @@ public class Project implements Model {
 
     public Boolean getInteriorWork() {
         return interiorWork;
-    }
-
-    public void setInteriorWork(boolean interiorWork) {
-        this.interiorWork = interiorWork;
     }
 
     public void setInteriorWork(Boolean interiorWork) {
