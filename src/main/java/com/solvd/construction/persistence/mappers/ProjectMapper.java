@@ -34,8 +34,4 @@ public interface ProjectMapper {
             @Result(column = "interior_work", property = "interiorWork")
     })
     Project retrieveById(Long id);
-
-    @Select("SELECT TIMESTAMPDIFF(DAY, start_date, finish_date) AS deadline FROM projects WHERE id = #{id}")
-    @Result(column = "deadline", property = "deadline")
-    Project setDeadline(Project project);
 }

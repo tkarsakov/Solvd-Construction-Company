@@ -1,6 +1,8 @@
 package com.solvd.construction.service.impl;
 
 import com.solvd.construction.model.Project;
+import com.solvd.construction.persistence.ProjectRepository;
+import com.solvd.construction.persistence.impl.ProjectRepositoryImplDAO;
 import com.solvd.construction.persistence.mappers.ProjectMapper;
 import com.solvd.construction.service.ClientService;
 import com.solvd.construction.service.EmployeeService;
@@ -60,7 +62,7 @@ public class MBProjectServiceImpl implements ProjectService {
     private Consumer<Project> setFields() {
         return project -> {
             project.setClient(
-                    clientService.retrieveById(project.getClient_id()).orElse(null)
+                    clientService.retrieveById(project.getClientId()).orElse(null)
             );
             project.setProjectMaterials(
                     projectMaterialService.retrieveAllByProjectId(project.getId())
@@ -68,7 +70,8 @@ public class MBProjectServiceImpl implements ProjectService {
             project.setEmployeeList(
                     employeeService.retrieveAllByProjectId(project.getId())
             );
-            projectMapper.setDeadline(project);
+            ProjectRepository projectRepository = new ProjectRepositoryImplDAO();
+            projectRepository.setDeadline(project);
         };
     }
 }

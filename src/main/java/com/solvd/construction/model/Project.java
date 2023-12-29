@@ -5,25 +5,26 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Project implements Model {
-    private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
-    private final BigDecimal INTERIOR_COST_PER_FLOOR = new BigDecimal("10000.00");
+
     private Long id;
-    private Timestamp startDate;
     private Timestamp finishDate;
-    private Long client_id;
+    private Long clientId;
+    private Timestamp startDate;
+    private Long floors;
+    private BigDecimal budget;
+    private Boolean interiorWork;
     private Client client;
     private List<Employee> employeeList;
     private List<ProjectMaterial> projectMaterials;
     private Long deadline;
-    private Long floors;
-    private Boolean interiorWork;
-    private BigDecimal budget;
+    private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
+    private final BigDecimal INTERIOR_COST_PER_FLOOR = new BigDecimal("10000.00");
 
-    public Project(Long id, Timestamp startDate, Timestamp finishDate, Long client_id,
-                   Long floors, Boolean interiorWork, BigDecimal budget) {
+    public Project(Long id, Timestamp finishDate, Long clientId, Timestamp startDate,
+                   Long floors, BigDecimal budget, Boolean interiorWork) {
         this.id = id;
         this.startDate = startDate;
-        this.client_id = client_id;
+        this.clientId = clientId;
         this.finishDate = finishDate;
         this.interiorWork = interiorWork;
         this.floors = floors;
@@ -72,12 +73,12 @@ public class Project implements Model {
         this.finishDate = finishDate;
     }
 
-    public Long getClient_id() {
-        return client_id;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public long getFloors() {

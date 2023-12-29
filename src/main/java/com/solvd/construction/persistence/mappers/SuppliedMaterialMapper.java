@@ -14,7 +14,7 @@ public interface SuppliedMaterialMapper {
     @Select("SELECT * FROM supplied_materials")
     @Results(value = {
             @Result(column = "id", property = "id"),
-            @Result(column = "material_id", property = "materialId"),
+            @Result(column = "material_id", property = "materialNameId"),
             @Result(column = "supplier_id", property = "supplierId"),
             @Result(column = "price", property = "price")
     })
@@ -23,7 +23,7 @@ public interface SuppliedMaterialMapper {
     @Select("SELECT * FROM supplied_materials WHERE id = #{id}")
     @Results(value = {
             @Result(column = "id", property = "id"),
-            @Result(column = "material_id", property = "materialId"),
+            @Result(column = "material_id", property = "materialNameId"),
             @Result(column = "supplier_id", property = "supplierId"),
             @Result(column = "price", property = "price")
     })

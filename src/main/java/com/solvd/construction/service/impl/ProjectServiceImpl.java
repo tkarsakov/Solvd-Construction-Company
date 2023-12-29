@@ -60,7 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
     private Consumer<Project> setFields() {
         return project -> {
             project.setClient(
-                    clientService.retrieveById(project.getClient_id()).orElse(null)
+                    clientService.retrieveById(project.getClientId()).orElse(null)
             );
             project.setProjectMaterials(
                     projectMaterialService.retrieveAllByProjectId(project.getId())

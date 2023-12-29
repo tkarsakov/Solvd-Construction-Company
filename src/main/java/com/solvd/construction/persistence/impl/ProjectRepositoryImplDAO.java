@@ -13,7 +13,7 @@ import java.util.Optional;
 public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> implements ProjectRepository {
     private final String TABLE_NAME = "projects";
     private final String[] TABLE_COLUMNS = {
-            "start_date", "client_id", "finish_date", "floors", "budget", "interior_work"
+            "finish_date", "client_id", "start_date", "floors", "budget", "interior_work"
     };
     private final int[] FIELD_TYPES = {
             Types.TIMESTAMP, Types.BIGINT, Types.TIMESTAMP, Types.BIGINT, Types.DECIMAL, Types.BOOLEAN
@@ -51,7 +51,7 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
 
     @Override
     public Object[] getModelParams(Project project) {
-        return new Object[]{project.getStartDate(), project.getClient_id(), project.getFinishDate(),
+        return new Object[]{project.getStartDate(), project.getClientId(), project.getFinishDate(),
                 project.getFloors(), project.getBudget(), project.isInteriorWork()};
     }
 
@@ -61,11 +61,11 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
                 new Project(
                         resultSet.getLong(1),
                         resultSet.getTimestamp(TABLE_COLUMNS[0]),
-                        resultSet.getTimestamp(TABLE_COLUMNS[2]),
                         resultSet.getLong(TABLE_COLUMNS[1]),
+                        resultSet.getTimestamp(TABLE_COLUMNS[2]),
                         resultSet.getLong(TABLE_COLUMNS[3]),
-                        resultSet.getBoolean(TABLE_COLUMNS[4]),
-                        resultSet.getBigDecimal(TABLE_COLUMNS[5])
+                        resultSet.getBigDecimal(TABLE_COLUMNS[4]),
+                        resultSet.getBoolean(TABLE_COLUMNS[5])
                 )
         );
     }
@@ -77,11 +77,11 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
             new Project(
                     resultSet.getLong(1),
                     resultSet.getTimestamp(TABLE_COLUMNS[0]),
-                    resultSet.getTimestamp(TABLE_COLUMNS[1]),
-                    resultSet.getLong(TABLE_COLUMNS[2]),
+                    resultSet.getLong(TABLE_COLUMNS[1]),
+                    resultSet.getTimestamp(TABLE_COLUMNS[2]),
                     resultSet.getLong(TABLE_COLUMNS[3]),
-                    resultSet.getBoolean(TABLE_COLUMNS[4]),
-                    resultSet.getBigDecimal(TABLE_COLUMNS[5])
+                    resultSet.getBigDecimal(TABLE_COLUMNS[4]),
+                    resultSet.getBoolean(TABLE_COLUMNS[5])
             );
         }
         return projects;

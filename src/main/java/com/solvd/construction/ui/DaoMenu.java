@@ -13,9 +13,11 @@ public class DaoMenu {
         switch (Input.daoOptionConsoleInput()) {
             case JDBC:
                 implementation = "jdbc";
+                ModeSelectMenu.showMenu(implementation);
                 break;
             case MYBATIS:
                 implementation = "mybatis";
+                ModeSelectMenu.showMenu(implementation);
                 break;
             case EXIT:
                 System.exit(0);

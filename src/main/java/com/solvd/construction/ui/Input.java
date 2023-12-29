@@ -25,6 +25,21 @@ public class Input {
         return input;
     }
 
+    public static Long longConsoleInput() {
+        Scanner scanner = new Scanner(System.in);
+        Long input = null;
+        while (input == null) {
+            try {
+                input = Long.parseLong(scanner.nextLine());
+            } catch (NoSuchElementException e) {
+                LOGGER.info("Incorrect input. Please try again");
+            } catch (NumberFormatException e) {
+                LOGGER.info("Input is not a number or is formatted incorrectly");
+            }
+        }
+        return input;
+    }
+
     public static UserOptions userOptionConsoleInput() {
         UserOptions input;
         while (true) {
