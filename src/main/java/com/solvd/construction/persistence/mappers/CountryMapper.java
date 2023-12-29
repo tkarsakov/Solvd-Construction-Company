@@ -1,4 +1,4 @@
-package com.solvd.construction.service.impl;
+package com.solvd.construction.persistence.mappers;
 
 import com.solvd.construction.model.Country;
 import org.apache.ibatis.annotations.*;

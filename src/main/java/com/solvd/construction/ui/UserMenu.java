@@ -10,11 +10,17 @@ public class UserMenu {
     private static final Logger LOGGER = LogManager.getLogger();
     private final ProjectService projectService = new ProjectServiceImpl();
 
-    public void userMenu() {
+    public static void showMenu(String implementation) {
+        switch (implementation) {
+            case "jdbc":
+                break;
+            case "mybatis":
+                break;
+        }
 
         while (true) {
             LOGGER.info(UserOptions.getOptions());
-            switch (Input.menuOptionConsoleInput()) {
+            switch (Input.userOptionConsoleInput()) {
                 case EARNINGS:
                     break;
                 case PROJECT:

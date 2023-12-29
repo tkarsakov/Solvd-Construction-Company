@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties resource="resources/config.properties"/>
+    <properties resource="config.properties"/>
     <settings>
         <setting name="lazyLoadingEnabled" value="true"/>
         <setting name="useGeneratedKeys" value="true"/>
@@ -15,9 +15,6 @@
     <typeAliases>
         <package name="com.solvd.construction.model"/>
     </typeAliases>
-    <mappers>
-        <package name="com.solvd.construction.service.impl"/>
-    </mappers>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -30,4 +27,7 @@
             </dataSource>
         </environment>
     </environments>
+    <mappers>
+        <package name="com.solvd.construction.persistence.mappers"/>
+    </mappers>
 </configuration>

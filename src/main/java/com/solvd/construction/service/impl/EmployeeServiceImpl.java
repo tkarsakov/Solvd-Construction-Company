@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             positionService.create(employee.getPosition());
         }
         employeeRepository.create(employee);
-        return null;
+        return employee;
     }
 
     @Override
