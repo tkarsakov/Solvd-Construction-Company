@@ -45,3 +45,4 @@ build/
 ## Enviro variables ##
 src/main/assets
 src/main/resources/.env
+src/main/resources/config.properties
