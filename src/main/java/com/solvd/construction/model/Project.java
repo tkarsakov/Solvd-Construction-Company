@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Project implements Model {
 
+    private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
+    private final BigDecimal INTERIOR_COST_PER_FLOOR = new BigDecimal("10000.00");
     private Long id;
     private Timestamp finishDate;
     private Long clientId;
@@ -17,11 +19,9 @@ public class Project implements Model {
     private List<Employee> employeeList;
     private List<ProjectMaterial> projectMaterials;
     private Long deadline;
-    private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
-    private final BigDecimal INTERIOR_COST_PER_FLOOR = new BigDecimal("10000.00");
 
     public Project(Long id, Timestamp finishDate, Long clientId, Timestamp startDate,
-                   Long floors, BigDecimal budget, Boolean interiorWork) {
+                   Long floors, BigDecimal budget, Boolean interiorWork, Long deadline) {
         this.id = id;
         this.startDate = startDate;
         this.clientId = clientId;
@@ -29,6 +29,7 @@ public class Project implements Model {
         this.interiorWork = interiorWork;
         this.floors = floors;
         this.budget = budget;
+        this.deadline = deadline;
     }
 
     public Project(Timestamp startDate, Timestamp finishDate, Client client, List<Employee> employeeList, List<ProjectMaterial> projectMaterials, Long deadline, Long floors, Boolean interiorWork, BigDecimal budget) {

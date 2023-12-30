@@ -1,8 +1,6 @@
 package com.solvd.construction.service.impl;
 
 import com.solvd.construction.model.Project;
-import com.solvd.construction.persistence.ProjectRepository;
-import com.solvd.construction.persistence.impl.ProjectRepositoryImplDAO;
 import com.solvd.construction.persistence.mappers.ProjectMapper;
 import com.solvd.construction.service.ClientService;
 import com.solvd.construction.service.EmployeeService;
@@ -70,8 +68,6 @@ public class MBProjectServiceImpl implements ProjectService {
             project.setEmployeeList(
                     employeeService.retrieveAllByProjectId(project.getId())
             );
-            ProjectRepository projectRepository = new ProjectRepositoryImplDAO();
-            projectRepository.setDeadline(project);
         };
     }
 }

@@ -65,7 +65,8 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
                         resultSet.getTimestamp(TABLE_COLUMNS[2]),
                         resultSet.getLong(TABLE_COLUMNS[3]),
                         resultSet.getBigDecimal(TABLE_COLUMNS[4]),
-                        resultSet.getBoolean(TABLE_COLUMNS[5])
+                        resultSet.getBoolean(TABLE_COLUMNS[5]),
+                        null
                 )
         );
     }
@@ -81,7 +82,8 @@ public class ProjectRepositoryImplDAO extends ModelRepositoryImpl<Project> imple
                     resultSet.getTimestamp(TABLE_COLUMNS[2]),
                     resultSet.getLong(TABLE_COLUMNS[3]),
                     resultSet.getBigDecimal(TABLE_COLUMNS[4]),
-                    resultSet.getBoolean(TABLE_COLUMNS[5])
+                    resultSet.getBoolean(TABLE_COLUMNS[5]),
+                    null
             );
         }
         return projects;

@@ -11,7 +11,7 @@ public interface ProjectMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Project create(Project project);
 
-    @Select("SELECT * FROM projects")
+    @Select("SELECT *, TIMESTAMPDIFF(DAY, start_date, finish_date) AS deadline FROM projects")
     @Results(value = {
             @Result(column = "id", property = "id"),
             @Result(column = "finish_date", property = "finishDate"),
@@ -19,11 +19,12 @@ public interface ProjectMapper {
             @Result(column = "start_date", property = "startDate"),
             @Result(column = "floors", property = "floors"),
             @Result(column = "budget", property = "budget"),
-            @Result(column = "interior_work", property = "interiorWork")
+            @Result(column = "interior_work", property = "interiorWork"),
+            @Result(column = "deadline", property = "deadline")
     })
     List<Project> retrieveAll();
 
-    @Select("SELECT * FROM projects WHERE id = #{id}")
+    @Select("SELECT *, TIMESTAMPDIFF(DAY, start_date, finish_date) AS deadline FROM projects WHERE id = #{id}")
     @Results(value = {
             @Result(column = "id", property = "id"),
             @Result(column = "finish_date", property = "finishDate"),
@@ -31,7 +32,8 @@ public interface ProjectMapper {
             @Result(column = "start_date", property = "startDate"),
             @Result(column = "floors", property = "floors"),
             @Result(column = "budget", property = "budget"),
-            @Result(column = "interior_work", property = "interiorWork")
+            @Result(column = "interior_work", property = "interiorWork"),
+            @Result(column = "deadline", property = "deadline")
     })
     Project retrieveById(Long id);
 }
