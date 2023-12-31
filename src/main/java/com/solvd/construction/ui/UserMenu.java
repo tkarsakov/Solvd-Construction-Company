@@ -29,7 +29,7 @@ public class UserMenu {
                 String resource = "mybatis-config.xml";
                 try (InputStream inputStream = Resources.getResourceAsStream(resource);) {
                     sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-                    projectService = new MBProjectServiceImpl(sessionFactory.openSession());
+                    projectService = new MBProjectServiceImpl(sessionFactory);
                 } catch (IOException e) {
                     LOGGER.fatal("Cannot find mybatis config file");
                     System.exit(1);

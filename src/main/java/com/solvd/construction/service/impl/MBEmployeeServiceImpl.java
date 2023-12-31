@@ -1,43 +1,54 @@
 package com.solvd.construction.service.impl;
 
 import com.solvd.construction.model.Employee;
-import com.solvd.construction.service.EmployeeService;
 import com.solvd.construction.persistence.mappers.EmployeeMapper;
+import com.solvd.construction.service.EmployeeService;
+import com.solvd.construction.service.PositionService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 public class MBEmployeeServiceImpl implements EmployeeService {
-    private final EmployeeMapper employeeMapper;
-    private final MBPositionServiceImpl positionService;
+    private final SqlSessionFactory sessionFactory;
+    private final PositionService positionService;
 
-    public MBEmployeeServiceImpl(SqlSession session) {
-        this.employeeMapper = session.getMapper(EmployeeMapper.class);
-        this.positionService = new MBPositionServiceImpl(session);
+    public MBEmployeeServiceImpl(SqlSessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        this.positionService = new MBPositionServiceImpl(sessionFactory);
     }
 
     @Override
     public Employee create(Employee employee) {
-        employee.setId(null);
-        if (positionService.retrieveByPositionName(employee.getPosition().getPositionName()).isEmpty()) {
-            positionService.create(employee.getPosition());
+        try (SqlSession session = sessionFactory.openSession()) {
+            EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
+            employee.setId(null);
+            if (positionService.retrieveByPositionName(employee.getPosition().getPositionName()).isEmpty()) {
+                positionService.create(employee.getPosition());
+            }
+            return employeeMapper.create(employee);
         }
-        return employeeMapper.create(employee);
     }
 
     @Override
     public List<Employee> retrieveAll() {
-        List<Employee> employeeList = employeeMapper.retrieveAll();
-        employeeList.forEach(setFields());
-        return employeeList;
+        try (SqlSession session = sessionFactory.openSession()) {
+            EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
+            List<Employee> employeeList = employeeMapper.retrieveAll();
+            employeeList.forEach(setFields());
+            return employeeList;
+        }
     }
 
     @Override
     public List<Employee> retrieveAllByProjectId(Long id) {
-        List<Employee> employeeList = employeeMapper.retrieveAllByProjectId(id);
-        employeeList.forEach(setFields());
-        return employeeList;
+        try (SqlSession session = sessionFactory.openSession()) {
+            EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
+            List<Employee> employeeList = employeeMapper.retrieveAllByProjectId(id);
+            employeeList.forEach(setFields());
+            return employeeList;
+        }
     }
 
     private Consumer<Employee> setFields() {

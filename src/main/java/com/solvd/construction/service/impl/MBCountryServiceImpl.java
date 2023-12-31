@@ -1,35 +1,43 @@
 package com.solvd.construction.service.impl;
 
 import com.solvd.construction.model.Country;
-import com.solvd.construction.service.CountryService;
 import com.solvd.construction.persistence.mappers.CountryMapper;
+import com.solvd.construction.service.CountryService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.Optional;
 
 public class MBCountryServiceImpl implements CountryService {
-    private final SqlSession session;
-    private final CountryMapper countryMapper;
+    private final SqlSessionFactory sessionFactory;
 
-    public MBCountryServiceImpl(SqlSession session) {
-        this.session = session;
-        this.countryMapper = session.getMapper(CountryMapper.class);
+    public MBCountryServiceImpl(SqlSessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public Country create(Country country) {
-        country.setId(null);
-        countryMapper.create(country);
-        return country;
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            country.setId(null);
+            countryMapper.create(country);
+            return country;
+        }
     }
 
     @Override
     public Optional<Country> retrieveById(Long id) {
-        return Optional.of(countryMapper.retrieveById(id));
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            return Optional.of(countryMapper.retrieveById(id));
+        }
     }
 
     @Override
     public Optional<Country> retrieveByCountryName(String countryName) {
-        return Optional.of(countryMapper.retrieveByCountryName(countryName));
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            return Optional.of(countryMapper.retrieveByCountryName(countryName));
+        }
     }
 }

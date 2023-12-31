@@ -7,54 +7,64 @@ import com.solvd.construction.service.EmployeeService;
 import com.solvd.construction.service.ProjectMaterialService;
 import com.solvd.construction.service.ProjectService;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 public class MBProjectServiceImpl implements ProjectService {
-    private final ProjectMapper projectMapper;
+    private final SqlSessionFactory sessionFactory;
     private final EmployeeService employeeService;
     private final ProjectMaterialService projectMaterialService;
     private final ClientService clientService;
 
-    public MBProjectServiceImpl(SqlSession session) {
-        this.projectMapper = session.getMapper(ProjectMapper.class);
-        this.employeeService = new MBEmployeeServiceImpl(session);
-        this.clientService = new MBClientServiceImpl(session);
-        this.projectMaterialService = new MBProjectMaterialServiceImpl(session);
+    public MBProjectServiceImpl(SqlSessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        this.employeeService = new MBEmployeeServiceImpl(sessionFactory);
+        this.clientService = new MBClientServiceImpl(sessionFactory);
+        this.projectMaterialService = new MBProjectMaterialServiceImpl(sessionFactory);
     }
 
     @Override
     public Project create(Project project) {
-        project.setId(null);
-        for (var employee : project.getEmployeeList()) {
-            if (employee.getId() == null) {
-                employeeService.create(employee);
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
+            project.setId(null);
+            for (var employee : project.getEmployeeList()) {
+                if (employee.getId() == null) {
+                    employeeService.create(employee);
+                }
             }
-        }
-        project.getProjectMaterials().forEach(projectMaterial -> {
-            if (projectMaterial.getId() == null) {
-                projectMaterialService.create(projectMaterial);
+            project.getProjectMaterials().forEach(projectMaterial -> {
+                if (projectMaterial.getId() == null) {
+                    projectMaterialService.create(projectMaterial);
+                }
+            });
+            if (project.getClient().getId() == null) {
+                clientService.create(project.getClient());
             }
-        });
-        if (project.getClient().getId() == null) {
-            clientService.create(project.getClient());
+            projectMapper.create(project);
+            return project;
         }
-        projectMapper.create(project);
-        return project;
     }
 
     @Override
     public List<Project> retrieveAll() {
-        return projectMapper.retrieveAll().stream().peek(setFields()).toList();
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
+            return projectMapper.retrieveAll().stream().peek(setFields()).toList();
+        }
     }
 
     @Override
     public Optional<Project> retrieveById(Long id) {
-        Optional<Project> optionalProject = Optional.of(projectMapper.retrieveById(id));
-        optionalProject.ifPresent(setFields());
-        return optionalProject;
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
+            Optional<Project> optionalProject = Optional.of(projectMapper.retrieveById(id));
+            optionalProject.ifPresent(setFields());
+            return optionalProject;
+        }
     }
 
     private Consumer<Project> setFields() {
