@@ -139,7 +139,17 @@ public class Project implements Model {
     }
 
     public BigDecimal calculateEarnings() {
-        return null;
+        BigDecimal totalMonthsSalary = getEmployeeSalaries();
+        BigDecimal totalMaterialCost = new BigDecimal("0.00");
+        for (var projectMaterial : projectMaterials) {
+            totalMaterialCost = totalMaterialCost.add(projectMaterial.getMaterialAmount().multiply(projectMaterial.getSuppliedMaterial().getPrice()));
+        }
+        BigDecimal totalFloorCost = FLOOR_COST.multiply(new BigDecimal(this.floors));
+        BigDecimal totalInteriorWork = new BigDecimal("0.00");
+        if (this.interiorWork) {
+            totalInteriorWork = INTERIOR_COST_PER_FLOOR.multiply(new BigDecimal(this.floors));
+        }
+        return budget.subtract(totalMonthsSalary).subtract(totalMaterialCost).subtract(totalFloorCost).subtract(totalInteriorWork);
     }
 
     private BigDecimal getEmployeeSalaries() {
