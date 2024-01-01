@@ -61,4 +61,14 @@ public class Client implements Model {
     public void setCountry(Country country) {
         this.country = country;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", clientName='" + clientName + '\'' +
+                ", clientEmail='" + clientEmail + '\'' +
+                ", countryId=" + countryId +
+                "}\n";
+    }
 }

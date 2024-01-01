@@ -6,6 +6,7 @@ import com.solvd.construction.persistence.impl.SupplierRepositoryImplDAO;
 import com.solvd.construction.service.CountryService;
 import com.solvd.construction.service.SupplierService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -40,6 +41,23 @@ public class SupplierServiceImpl implements SupplierService {
         Optional<Supplier> optionalSupplier = supplierRepository.findBySupplierName(supplierName);
         optionalSupplier.ifPresent(setFields());
         return optionalSupplier;
+    }
+
+    @Override
+    public List<Supplier> retrieveAll() {
+        List<Supplier> suppliers = supplierRepository.findAll();
+        suppliers.forEach(setFields());
+        return suppliers;
+    }
+
+    @Override
+    public void update(Supplier supplier) {
+        supplierRepository.update(supplier);
+    }
+
+    @Override
+    public void delete(Long id) {
+        supplierRepository.deleteById(id);
     }
 
     private Consumer<Supplier> setFields() {

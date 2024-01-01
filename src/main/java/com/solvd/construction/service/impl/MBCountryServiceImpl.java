@@ -6,6 +6,7 @@ import com.solvd.construction.service.CountryService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MBCountryServiceImpl implements CountryService {
@@ -38,6 +39,31 @@ public class MBCountryServiceImpl implements CountryService {
         try (SqlSession session = sessionFactory.openSession()) {
             CountryMapper countryMapper = session.getMapper(CountryMapper.class);
             return Optional.of(countryMapper.retrieveByCountryName(countryName));
+        }
+    }
+
+    @Override
+    public List<Country> retrieveAll() {
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            List<Country> countries = countryMapper.retrieveAll();
+        }
+        return null;
+    }
+
+    @Override
+    public void update(Country country) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            countryMapper.update(country);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            CountryMapper countryMapper = session.getMapper(CountryMapper.class);
+            countryMapper.delete(id);
         }
     }
 }

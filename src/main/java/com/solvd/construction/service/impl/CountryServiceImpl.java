@@ -5,6 +5,7 @@ import com.solvd.construction.persistence.CountryRepository;
 import com.solvd.construction.persistence.impl.CountryRepositoryImplDAO;
 import com.solvd.construction.service.CountryService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CountryServiceImpl implements CountryService {
@@ -29,5 +30,20 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Optional<Country> retrieveByCountryName(String countryName) {
         return countryRepository.findByCountryName(countryName);
+    }
+
+    @Override
+    public List<Country> retrieveAll() {
+        return countryRepository.findAll();
+    }
+
+    @Override
+    public void update(Country country) {
+        countryRepository.update(country);
+    }
+
+    @Override
+    public void delete(Long id) {
+        countryRepository.deleteById(id);
     }
 }

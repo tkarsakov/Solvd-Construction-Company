@@ -67,6 +67,22 @@ public class MBProjectServiceImpl implements ProjectService {
         }
     }
 
+    @Override
+    public void update(Project project) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
+            projectMapper.update(project);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
+            projectMapper.delete(id);
+        }
+    }
+
     private Consumer<Project> setFields() {
         return project -> {
             project.setClient(

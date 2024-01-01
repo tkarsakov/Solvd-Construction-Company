@@ -74,4 +74,15 @@ public class ProjectMaterial implements Model {
     public void setSuppliedMaterial(SuppliedMaterial suppliedMaterial) {
         this.suppliedMaterial = suppliedMaterial;
     }
+
+    @Override
+    public String toString() {
+        return "ProjectMaterial{" +
+                "id=" + id +
+                ", suppliedMaterialId=" + suppliedMaterialId +
+                ", materialAmount=" + materialAmount +
+                ", projectId=" + projectId +
+                ", measure='" + measure + '\'' +
+                "}\n";
+    }
 }

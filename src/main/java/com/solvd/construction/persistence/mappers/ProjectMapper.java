@@ -36,4 +36,11 @@ public interface ProjectMapper {
             @Result(column = "deadline", property = "deadline")
     })
     Project retrieveById(Long id);
+
+    @Update("UPDATE projects SET finish_date = #{finishDate}, client_id = #{clientId}, start_date = #{startDate}, " +
+            "floors = #{floors}, budget = #{budget}, interior_work = #{interiorWork}")
+    void update(Project project);
+
+    @Delete("DELETE FROM projects WHERE id = #{id}")
+    void delete(Long id);
 }

@@ -11,4 +11,8 @@ public interface ProjectService {
     List<Project> retrieveAll();
 
     Optional<Project> retrieveById(Long id);
+
+    void update(Project project);
+
+    void delete(Long id);
 }

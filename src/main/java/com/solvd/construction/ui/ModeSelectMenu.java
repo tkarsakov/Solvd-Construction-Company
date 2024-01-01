@@ -12,6 +12,7 @@ public class ModeSelectMenu {
         LOGGER.info(ModeSelectOptions.getOptions());
         switch (Input.modeSelectOptionConsoleInput()) {
             case ADMIN:
+                AdminMenu.showMenu(serviceFactory);
                 break;
             case USER:
                 UserMenu.showMenu(serviceFactory);

@@ -41,4 +41,13 @@ public class Country implements Model {
     public void setPostalCode(Long postalCode) {
         this.postalCode = postalCode;
     }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "id=" + id +
+                ", countryName='" + countryName + '\'' +
+                ", postalCode=" + postalCode +
+                "}\n";
+    }
 }

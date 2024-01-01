@@ -39,4 +39,27 @@ public class ProjectMaterialServiceImpl implements ProjectMaterialService {
         }
         return projectMaterials;
     }
+
+    @Override
+    public List<ProjectMaterial> retrieveAll() {
+        List<ProjectMaterial> projectMaterials = projectMaterialRepository.findAll();
+        for (var projectMaterial : projectMaterials) {
+            projectMaterial.setSuppliedMaterial(
+                    suppliedMaterialService
+                            .retrieveById(projectMaterial.getSuppliedMaterialId())
+                            .orElse(null)
+            );
+        }
+        return projectMaterials;
+    }
+
+    @Override
+    public void update(ProjectMaterial projectMaterial) {
+        projectMaterialRepository.update(projectMaterial);
+    }
+
+    @Override
+    public void delete(Long id) {
+        projectMaterialRepository.deleteById(id);
+    }
 }

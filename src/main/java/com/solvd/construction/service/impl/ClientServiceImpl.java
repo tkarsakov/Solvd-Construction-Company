@@ -6,6 +6,7 @@ import com.solvd.construction.persistence.impl.ClientRepositoryImplDAO;
 import com.solvd.construction.service.ClientService;
 import com.solvd.construction.service.CountryService;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -33,6 +34,23 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> optionalClient = clientRepository.findById(id);
         optionalClient.ifPresent(setFields());
         return optionalClient;
+    }
+
+    @Override
+    public List<Client> retrieveAll() {
+        List<Client> clients = clientRepository.findAll();
+        clients.forEach(setFields());
+        return clients;
+    }
+
+    @Override
+    public void update(Client client) {
+        clientRepository.update(client);
+    }
+
+    @Override
+    public void delete(Long id) {
+        clientRepository.deleteById(id);
     }
 
     private Consumer<Client> setFields() {

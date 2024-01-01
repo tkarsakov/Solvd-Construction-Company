@@ -7,6 +7,7 @@ import com.solvd.construction.service.SupplierService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -48,6 +49,32 @@ public class MBSupplierServiceImpl implements SupplierService {
             Optional<Supplier> optionalSupplier = Optional.of(supplierMapper.retrieveBySupplierName(supplierName));
             optionalSupplier.ifPresent(setFields());
             return optionalSupplier;
+        }
+    }
+
+    @Override
+    public List<Supplier> retrieveAll() {
+        try (SqlSession session = sessionFactory.openSession()) {
+            SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
+            List<Supplier> suppliers = supplierMapper.retrieveAll();
+            suppliers.forEach(setFields());
+            return suppliers;
+        }
+    }
+
+    @Override
+    public void update(Supplier supplier) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
+            supplierMapper.update(supplier);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
+            supplierMapper.delete(id);
         }
     }
 

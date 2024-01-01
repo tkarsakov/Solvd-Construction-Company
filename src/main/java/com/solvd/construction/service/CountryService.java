@@ -2,6 +2,7 @@ package com.solvd.construction.service;
 
 import com.solvd.construction.model.Country;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CountryService {
@@ -10,4 +11,10 @@ public interface CountryService {
     Optional<Country> retrieveById(Long id);
 
     Optional<Country> retrieveByCountryName(String countryName);
+
+    List<Country> retrieveAll();
+
+    void update(Country country);
+
+    void delete(Long id);
 }

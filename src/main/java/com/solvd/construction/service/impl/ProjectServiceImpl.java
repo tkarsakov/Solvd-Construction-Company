@@ -57,6 +57,16 @@ public class ProjectServiceImpl implements ProjectService {
         return optionalProject;
     }
 
+    @Override
+    public void update(Project project) {
+        projectRepository.update(project);
+    }
+
+    @Override
+    public void delete(Long id) {
+        projectRepository.deleteById(id);
+    }
+
     private Consumer<Project> setFields() {
         return project -> {
             project.setClient(

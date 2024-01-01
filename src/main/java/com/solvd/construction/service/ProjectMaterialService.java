@@ -8,4 +8,10 @@ public interface ProjectMaterialService {
     ProjectMaterial create(ProjectMaterial projectMaterial);
 
     List<ProjectMaterial> retrieveAllByProjectId(Long projectId);
+
+    List<ProjectMaterial> retrieveAll();
+
+    void update(ProjectMaterial projectMaterial);
+
+    void delete(Long id);
 }

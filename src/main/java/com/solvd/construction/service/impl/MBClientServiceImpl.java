@@ -7,6 +7,7 @@ import com.solvd.construction.service.CountryService;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MBClientServiceImpl implements ClientService {
@@ -39,6 +40,33 @@ public class MBClientServiceImpl implements ClientService {
             optionalClient.ifPresent(client -> client
                     .setCountry(countryService.retrieveById(client.getCountryId()).orElse(null)));
             return Optional.of(clientMapper.retrieveById(id));
+        }
+    }
+
+    @Override
+    public List<Client> retrieveAll() {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ClientMapper clientMapper = session.getMapper(ClientMapper.class);
+            List<Client> clients = clientMapper.retrieveAll();
+            clients.forEach(client -> client
+                    .setCountry(countryService.retrieveById(client.getCountryId()).orElse(null)));
+            return clients;
+        }
+    }
+
+    @Override
+    public void update(Client client) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ClientMapper clientMapper = session.getMapper(ClientMapper.class);
+            clientMapper.update(client);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ClientMapper clientMapper = session.getMapper(ClientMapper.class);
+            clientMapper.delete(id);
         }
     }
 }

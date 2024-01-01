@@ -213,4 +213,17 @@ public class Project implements Model {
                 .add(totalSalary).add(totalFloorCost).add(totalInteriorWork)).append("\n");
         return stringBuilder.toString();
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", finishDate=" + finishDate.toString() +
+                ", clientId=" + clientId +
+                ", startDate=" + startDate.toString() +
+                ", floors=" + floors +
+                ", budget=" + budget +
+                ", interiorWork=" + interiorWork +
+                "}\n";
+    }
 }

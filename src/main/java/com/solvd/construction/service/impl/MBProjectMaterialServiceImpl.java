@@ -46,4 +46,36 @@ public class MBProjectMaterialServiceImpl implements ProjectMaterialService {
             return projectMaterials;
         }
     }
+
+    @Override
+    public List<ProjectMaterial> retrieveAll() {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
+            List<ProjectMaterial> projectMaterials = projectMaterialMapper.retrieveAll();
+            for (var projectMaterial : projectMaterials) {
+                projectMaterial.setSuppliedMaterial(
+                        suppliedMaterialService
+                                .retrieveById(projectMaterial.getSuppliedMaterialId())
+                                .orElse(null)
+                );
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void update(ProjectMaterial projectMaterial) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
+            projectMaterialMapper.update(projectMaterial);
+        }
+    }
+
+    @Override
+    public void delete(Long id) {
+        try (SqlSession session = sessionFactory.openSession()) {
+            ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
+            projectMaterialMapper.delete(id);
+        }
+    }
 }
