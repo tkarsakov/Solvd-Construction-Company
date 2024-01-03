@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<client xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="xsd/client.xsd">
+    <clientName>Name</clientName>
+    <clientEmail>email</clientEmail>
+    <Country>
+        <countryName>Slovakia</countryName>
+        <postalCode>123</postalCode>
+    </Country>
+</client>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="Country" type="CountryType"/>
+
+    <xs:complexType name="CountryType">
+        <xs:sequence>
+
+            <xs:element name="countryName" type="xs:string">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:whiteSpace value="collapse"/>
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="postalCode" type="xs:long"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

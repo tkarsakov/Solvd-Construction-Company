@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<client xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="xsd/client.xsd">
+    <clientName>BigPlays Inc.</clientName>
+    <clientEmail>bigplays@gmail.com</clientEmail>
+    <countryId>1</countryId>
+</client>

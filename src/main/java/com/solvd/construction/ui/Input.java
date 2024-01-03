@@ -1,7 +1,7 @@
 package com.solvd.construction.ui;
 
 import com.solvd.construction.model.*;
-import com.solvd.construction.ui.menuoptions.*;
+import com.solvd.construction.ui.menuoptions.ObjectSelectOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,59 +41,12 @@ public class Input {
         return input;
     }
 
-    public static UserOptions userOptionConsoleInput() {
-        UserOptions input;
-        while (true) {
-            try {
-                input = UserOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
 
-    public static DaoOptions daoOptionConsoleInput() {
-        DaoOptions input;
+    public static <T extends Enum<T>> T enumInput(Class<T> enumClass) {
+        T input;
         while (true) {
             try {
-                input = DaoOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static ModeSelectOptions modeSelectOptionConsoleInput() {
-        ModeSelectOptions input;
-        while (true) {
-            try {
-                input = ModeSelectOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static AdminOptions adminOptionConsoleInput() {
-        AdminOptions input;
-        while (true) {
-            try {
-                input = AdminOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static ObjectSelectOptions objectSelectOptionConsoleInput() {
-        ObjectSelectOptions input;
-        while (true) {
-            try {
-                input = ObjectSelectOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
+                input = Enum.valueOf(enumClass, Input.stringConsoleInput().toUpperCase().strip());
                 return input;
             } catch (IllegalArgumentException e) {
                 LOGGER.info("Wrong command.");

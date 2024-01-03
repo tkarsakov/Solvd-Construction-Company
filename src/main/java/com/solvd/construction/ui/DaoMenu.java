@@ -11,7 +11,7 @@ public class DaoMenu {
     public static void showMenu() {
         String implementation;
         LOGGER.info(DaoOptions.getOptions());
-        switch (Input.daoOptionConsoleInput()) {
+        switch (Input.enumInput(DaoOptions.class)) {
             case JDBC:
                 implementation = "jdbc";
                 ModeSelectMenu.showMenu(new ServiceFactory(implementation));

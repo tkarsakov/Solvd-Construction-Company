@@ -12,9 +12,7 @@ public class AdminMenu {
     public static void showMenu(ServiceFactory serviceFactory) {
         while (true) {
             LOGGER.info(AdminOptions.getOptions());
-            switch (Input.adminOptionConsoleInput()) {
-                case PARSE -> {
-                }
+            switch (Input.enumInput(AdminOptions.class)) {
                 case CREATE -> AdminMenuUtil.create(serviceFactory);
                 case READ -> AdminMenuUtil.read(serviceFactory);
                 case UPDATE -> AdminMenuUtil.update(serviceFactory);

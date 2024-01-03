@@ -14,7 +14,9 @@ public enum ModeSelectOptions {
     public static String getOptions() {
         StringBuilder stringBuilder = new StringBuilder();
         for (var option : ModeSelectOptions.values()) {
-            stringBuilder.append(option.description)
+            stringBuilder
+                    .append("\n")
+                    .append(option.description)
                     .append("\n");
         }
         return stringBuilder.toString();

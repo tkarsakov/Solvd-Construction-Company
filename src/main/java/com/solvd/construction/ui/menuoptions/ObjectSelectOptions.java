@@ -15,7 +15,9 @@ public enum ObjectSelectOptions {
     public static String getOptions() {
         StringBuilder stringBuilder = new StringBuilder();
         for (var option : ObjectSelectOptions.values()) {
-            stringBuilder.append(option.description)
+            stringBuilder
+                    .append("\n")
+                    .append(option.description)
                     .append("\n");
         }
         return stringBuilder.toString();

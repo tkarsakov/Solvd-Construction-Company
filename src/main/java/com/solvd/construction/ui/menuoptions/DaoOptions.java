@@ -13,7 +13,9 @@ public enum DaoOptions {
     public static String getOptions() {
         StringBuilder stringBuilder = new StringBuilder();
         for (var option : DaoOptions.values()) {
-            stringBuilder.append(option.description)
+            stringBuilder
+                    .append("\n")
+                    .append(option.description)
                     .append("\n");
         }
         return stringBuilder.toString();

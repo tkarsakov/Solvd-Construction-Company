@@ -10,7 +10,7 @@ public class ModeSelectMenu {
 
     public static void showMenu(ServiceFactory serviceFactory) {
         LOGGER.info(ModeSelectOptions.getOptions());
-        switch (Input.modeSelectOptionConsoleInput()) {
+        switch (Input.enumInput(ModeSelectOptions.class)) {
             case ADMIN:
                 AdminMenu.showMenu(serviceFactory);
                 break;
