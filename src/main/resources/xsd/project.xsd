@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="projectMaterial.xsd"/>
+    <xs:include schemaLocation="client.xsd"/>
+
+    <xs:element name="project" type="projectType"/>
+
+    <xs:complexType name="projectType">
+        <xs:sequence>
+            <xs:element name="finishDate" type="TimestampType"/>
+            <xs:choice>
+                <xs:element name="clientId" type="xs:long"/>
+                <xs:element name="client" type="ClientType"/>
+            </xs:choice>
+            <xs:element name="startDate" type="TimestampType"/>
+            <xs:element name="floors" type="xs:long"/>
+            <xs:element name="budget" type="xs:decimal"/>
+            <xs:element name="interiorWork" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="TimestampType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

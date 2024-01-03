@@ -2,12 +2,12 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:include schemaLocation="country.xsd"/>
 
-    <xs:element name="client" type="ClientType"/>
+    <xs:element name="supplier" type="SupplierType"/>
 
-    <xs:complexType name="ClientType">
+    <xs:complexType name="SupplierType">
         <xs:sequence>
 
-            <xs:element name="clientName" type="xs:string">
+            <xs:element name="supplierName" type="xs:string">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:whiteSpace value="collapse"/>
@@ -16,7 +16,7 @@
                 </xs:simpleType>
             </xs:element>
 
-            <xs:element name="clientEmail" type="xs:string">
+            <xs:element name="supplierEmail" type="xs:string">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:whiteSpace value="collapse"/>
@@ -31,7 +31,5 @@
             </xs:choice>
 
         </xs:sequence>
-
     </xs:complexType>
-
 </xs:schema>
