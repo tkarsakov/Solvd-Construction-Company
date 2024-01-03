@@ -8,7 +8,7 @@ import java.util.List;
 public interface PositionMapper {
     @Insert("INSERT INTO positions(position_name, months_salary) VALUES (#{positionName}, #{monthsSalary})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Position create(Position position);
+    void create(Position position);
 
     @Select("SELECT * FROM positions")
     @Results(value = {

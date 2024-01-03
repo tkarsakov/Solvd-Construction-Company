@@ -24,10 +24,10 @@ public class MBEmployeeServiceImpl implements EmployeeService {
         try (SqlSession session = sessionFactory.openSession()) {
             EmployeeMapper employeeMapper = session.getMapper(EmployeeMapper.class);
             employee.setId(null);
-            if (positionService.retrieveByPositionName(employee.getPosition().getPositionName()).isEmpty()) {
-                positionService.create(employee.getPosition());
-            }
-            return employeeMapper.create(employee);
+            employee.setPosition(positionService.retrieveById(employee.getPositionId()).orElse(null));
+            employeeMapper.create(employee);
+            session.commit();
+            return employee;
         }
     }
 

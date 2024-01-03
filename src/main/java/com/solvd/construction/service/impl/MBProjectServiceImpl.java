@@ -41,10 +41,9 @@ public class MBProjectServiceImpl implements ProjectService {
                     projectMaterialService.create(projectMaterial);
                 }
             });
-            if (project.getClient().getId() == null) {
-                clientService.create(project.getClient());
-            }
+            project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
             projectMapper.create(project);
+            session.commit();
             return project;
         }
     }
@@ -72,6 +71,7 @@ public class MBProjectServiceImpl implements ProjectService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
             projectMapper.update(project);
+            session.commit();
         }
     }
 
@@ -80,6 +80,7 @@ public class MBProjectServiceImpl implements ProjectService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
             projectMapper.delete(id);
+            session.commit();
         }
     }
 

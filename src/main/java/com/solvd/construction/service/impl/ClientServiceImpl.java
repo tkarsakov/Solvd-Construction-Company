@@ -22,9 +22,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client create(Client client) {
         client.setId(null);
-        if (countryService.retrieveByCountryName(client.getCountry().getCountryName()).isEmpty()) {
-            client.setCountryId(countryService.create(client.getCountry()).getId());
-        }
+        client.setCountry(countryService.retrieveById(client.getCountryId()).orElse(null));
         clientRepository.create(client);
         return client;
     }

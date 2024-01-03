@@ -9,7 +9,7 @@ public interface ClientMapper {
     @Insert("INSERT INTO clients(client_name, client_email, country_id) " +
             "VALUES (#{clientName}, #{clientEmail}, #{countryId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Client create(Client client);
+    void create(Client client);
 
     @Select("SELECT * FROM clients WHERE id = #{id}")
     @Results(value = {

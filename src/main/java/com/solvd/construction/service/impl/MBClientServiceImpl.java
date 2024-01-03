@@ -25,10 +25,10 @@ public class MBClientServiceImpl implements ClientService {
         try (SqlSession session = sessionFactory.openSession()) {
             ClientMapper clientMapper = session.getMapper(ClientMapper.class);
             client.setId(null);
-            if (client.getCountryId() == null || client.getCountry().getId() == null) {
-                countryService.create(client.getCountry());
-            }
-            return clientMapper.create(client);
+            client.setCountry(countryService.retrieveById(client.getCountryId()).orElse(null));
+            clientMapper.create(client);
+            session.commit();
+            return client;
         }
     }
 
@@ -59,6 +59,7 @@ public class MBClientServiceImpl implements ClientService {
         try (SqlSession session = sessionFactory.openSession()) {
             ClientMapper clientMapper = session.getMapper(ClientMapper.class);
             clientMapper.update(client);
+            session.commit();
         }
     }
 
@@ -67,6 +68,7 @@ public class MBClientServiceImpl implements ClientService {
         try (SqlSession session = sessionFactory.openSession()) {
             ClientMapper clientMapper = session.getMapper(ClientMapper.class);
             clientMapper.delete(id);
+            session.commit();
         }
     }
 }

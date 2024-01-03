@@ -9,7 +9,7 @@ public interface ProjectMapper {
     @Insert("INSERT INTO projects(finish_date, client_id, start_date, floors, budget, interior_work) " +
             "VALUES (#{finishDate}, #{clientId}, #{startDate}, #{floors}, #{budget}, #{interiorWork})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Project create(Project project);
+    void create(Project project);
 
     @Select("SELECT *, TIMESTAMPDIFF(DAY, start_date, finish_date) AS deadline FROM projects")
     @Results(value = {

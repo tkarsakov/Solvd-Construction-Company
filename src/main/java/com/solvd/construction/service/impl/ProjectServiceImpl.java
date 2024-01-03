@@ -38,9 +38,7 @@ public class ProjectServiceImpl implements ProjectService {
                 projectMaterialService.create(projectMaterial);
             }
         });
-        if (project.getClient().getId() == null) {
-            clientService.create(project.getClient());
-        }
+        project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
         projectRepository.create(project);
         return project;
     }

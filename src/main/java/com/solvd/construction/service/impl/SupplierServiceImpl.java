@@ -22,9 +22,7 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Supplier create(Supplier supplier) {
         supplier.setId(null);
-        if (countryService.retrieveByCountryName(supplier.getCountry().getCountryName()).isEmpty()) {
-            supplier.setCountryId(countryService.create(supplier.getCountry()).getId());
-        }
+        supplier.setCountry(countryService.retrieveById(supplier.getCountryId()).orElse(null));
         supplierRepository.create(supplier);
         return supplier;
     }

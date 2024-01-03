@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 public interface MaterialNameMapper {
     @Insert("INSERT INTO material_names(material_name) VALUES (#{materialName})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    MaterialName create(MaterialName materialName);
+    void create(MaterialName materialName);
 
     @Select("SELECT * FROM material_names WHERE id = #{id}")
     @Results(value = {

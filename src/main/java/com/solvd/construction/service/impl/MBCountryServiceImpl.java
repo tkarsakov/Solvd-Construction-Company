@@ -22,6 +22,7 @@ public class MBCountryServiceImpl implements CountryService {
             CountryMapper countryMapper = session.getMapper(CountryMapper.class);
             country.setId(null);
             countryMapper.create(country);
+            session.commit();
             return country;
         }
     }
@@ -46,9 +47,8 @@ public class MBCountryServiceImpl implements CountryService {
     public List<Country> retrieveAll() {
         try (SqlSession session = sessionFactory.openSession()) {
             CountryMapper countryMapper = session.getMapper(CountryMapper.class);
-            List<Country> countries = countryMapper.retrieveAll();
+            return countryMapper.retrieveAll();
         }
-        return null;
     }
 
     @Override
@@ -56,6 +56,7 @@ public class MBCountryServiceImpl implements CountryService {
         try (SqlSession session = sessionFactory.openSession()) {
             CountryMapper countryMapper = session.getMapper(CountryMapper.class);
             countryMapper.update(country);
+            session.commit();
         }
     }
 
@@ -64,6 +65,7 @@ public class MBCountryServiceImpl implements CountryService {
         try (SqlSession session = sessionFactory.openSession()) {
             CountryMapper countryMapper = session.getMapper(CountryMapper.class);
             countryMapper.delete(id);
+            session.commit();
         }
     }
 }

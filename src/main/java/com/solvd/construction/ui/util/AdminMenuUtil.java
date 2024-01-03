@@ -30,10 +30,14 @@ public class AdminMenuUtil {
         switch (option) {
             case PROJECTMATERIAL -> serviceFactory.getProjectMaterialService().retrieveAll()
                     .forEach(projectMaterial -> LOGGER.info(projectMaterial.toString()));
-            case SUPPLIER -> serviceFactory.getSupplierService().retrieveAll();
-            case PROJECT -> serviceFactory.getProjectService().retrieveAll();
-            case COUNTRY -> serviceFactory.getCountryService().retrieveAll();
-            case CLIENT -> serviceFactory.getClientService().retrieveAll();
+            case SUPPLIER -> serviceFactory.getSupplierService().retrieveAll()
+                    .forEach(supplier -> LOGGER.info(supplier.toString()));
+            case PROJECT -> serviceFactory.getProjectService().retrieveAll()
+                    .forEach(project -> LOGGER.info(project.toString()));
+            case COUNTRY -> serviceFactory.getCountryService().retrieveAll()
+                    .forEach(country -> LOGGER.info(country.toString()));
+            case CLIENT -> serviceFactory.getClientService().retrieveAll()
+                    .forEach(client -> LOGGER.info(client.toString()));
         }
     }
 

@@ -10,8 +10,8 @@ public class AdminMenu {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static void showMenu(ServiceFactory serviceFactory) {
-        LOGGER.info(AdminOptions.getOptions());
         while (true) {
+            LOGGER.info(AdminOptions.getOptions());
             switch (Input.adminOptionConsoleInput()) {
                 case PARSE -> {
                 }
