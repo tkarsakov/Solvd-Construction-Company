@@ -17,6 +17,9 @@ public class ModeSelectMenu {
             case USER:
                 UserMenu.showMenu(serviceFactory);
                 break;
+            case BACK:
+                DaoMenu.showMenu();
+                break;
             case EXIT:
                 System.exit(0);
         }
