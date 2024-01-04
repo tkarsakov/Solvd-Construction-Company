@@ -7,23 +7,9 @@
     <xs:complexType name="SupplierType">
         <xs:sequence>
 
-            <xs:element name="supplierName" type="xs:string">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="supplierName" type="varchar100"/>
 
-            <xs:element name="supplierEmail" type="xs:string">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="supplierEmail" type="varchar100"/>
 
             <xs:choice>
                 <xs:element name="countryId" type="xs:long"/>
@@ -32,4 +18,12 @@
 
         </xs:sequence>
     </xs:complexType>
+
+    <xs:simpleType name="varchar100">
+        <xs:restriction base="xs:string">
+            <xs:whiteSpace value="collapse"/>
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>

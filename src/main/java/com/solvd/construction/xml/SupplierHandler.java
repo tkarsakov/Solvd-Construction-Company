@@ -1,20 +1,18 @@
 package com.solvd.construction.xml;
 
-import com.solvd.construction.model.Client;
 import com.solvd.construction.model.Country;
+import com.solvd.construction.model.Supplier;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import static com.solvd.construction.xml.modeltags.ClientTags.*;
 import static com.solvd.construction.xml.modeltags.CountryTags.COUNTRY_NAME_TAG;
 import static com.solvd.construction.xml.modeltags.CountryTags.POSTAL_CODE_TAG;
+import static com.solvd.construction.xml.modeltags.SupplierTags.*;
 
-public class ClientHandler extends DefaultHandler implements ModelHandler<Client> {
+public class SupplierHandler extends DefaultHandler implements ModelHandler<Supplier> {
     private String currentTag;
-
-    private final Client client = new Client(null, null, null);
-
+    private final Supplier supplier = new Supplier(null, null, null);
 
     @Override
     public void startDocument() throws SAXException {
@@ -38,21 +36,21 @@ public class ClientHandler extends DefaultHandler implements ModelHandler<Client
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        if (currentTag.equals(clientName.name())) {
-            client.setClientName(new String(ch, start, length));
-        } else if (currentTag.equals(clientEmail.name())) {
-            client.setClientEmail(new String(ch, start, length));
-        } else if (currentTag.equals(countryId.name())) {
-            client.setCountryId(Long.valueOf(new String(ch, start, length)));
+        if (currentTag.equals(SUPPLIER_NAME_TAG.TAG)) {
+            supplier.setSupplierName(new String(ch, start, length));
+        } else if (currentTag.equals(SUPPLIER_EMAIL_TAG.TAG)) {
+            supplier.setSupplierEmail(new String(ch, start, length));
+        } else if (currentTag.equals(SUPPLIER_COUNTRY_ID_TAG.TAG)) {
+            supplier.setCountryId(Long.valueOf(new String(ch, start, length)));
         } else if (currentTag.equals(COUNTRY_NAME_TAG.TAG)) {
-            client.setCountry(new Country(new String(ch, start, length), null));
+            supplier.setCountry(new Country(new String(ch, start, length), null));
         } else if (currentTag.equals(POSTAL_CODE_TAG.TAG)) {
-            client.getCountry().setPostalCode(Long.valueOf(new String(ch, start, length)));
+            supplier.getCountry().setPostalCode(Long.valueOf(new String(ch, start, length)));
         }
     }
 
     @Override
-    public Client getModel() {
-        return this.client;
+    public Supplier getModel() {
+        return supplier;
     }
 }

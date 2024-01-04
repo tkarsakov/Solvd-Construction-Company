@@ -13,7 +13,7 @@ public class AdminMenuUtil {
 
     public static void create(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         Model model = Input.getModelFromConsole(option);
         switch (option) {
             case PROJECTMATERIAL -> serviceFactory.getProjectMaterialService().create((ProjectMaterial) model);
@@ -26,7 +26,7 @@ public class AdminMenuUtil {
 
     public static void read(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         switch (option) {
             case PROJECTMATERIAL -> serviceFactory.getProjectMaterialService().retrieveAll()
                     .forEach(projectMaterial -> LOGGER.info(projectMaterial.toString()));
@@ -43,7 +43,7 @@ public class AdminMenuUtil {
 
     public static void update(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         LOGGER.info("Enter id");
         Long id = Input.longConsoleInput();
         Model model = Input.getModelFromConsole(option);
@@ -59,7 +59,7 @@ public class AdminMenuUtil {
 
     public static void delete(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         LOGGER.info("Enter id");
         Long id = Input.longConsoleInput();
         switch (option) {

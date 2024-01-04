@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Country xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="xsd/country.xsd">
+<Country>
     <countryName>United Kingdom</countryName>
     <postalCode>442323</postalCode>
+    <memes>ssss</memes>
 </Country>

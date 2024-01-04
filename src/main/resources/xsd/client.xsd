@@ -7,23 +7,9 @@
     <xs:complexType name="ClientType">
         <xs:sequence>
 
-            <xs:element name="clientName" type="xs:string">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="clientName" type="varchar100"/>
 
-            <xs:element name="clientEmail" type="xs:string">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="clientEmail" type="varchar100"/>
 
             <xs:choice>
                 <xs:element name="countryId" type="xs:long"/>
@@ -33,5 +19,12 @@
         </xs:sequence>
 
     </xs:complexType>
+
+    <xs:simpleType name="varchar100">
+        <xs:restriction base="xs:string">
+            <xs:whiteSpace value="collapse"/>
+            <xs:maxLength value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>
