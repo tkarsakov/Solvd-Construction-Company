@@ -3,6 +3,7 @@ package com.solvd.construction.ui;
 import com.solvd.construction.service.impl.ServiceFactory;
 import com.solvd.construction.ui.menuoptions.InputTypeOptions;
 import com.solvd.construction.ui.util.AdminMenuUtil;
+import com.solvd.construction.ui.util.InputTypeMenuUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,8 +14,7 @@ public class InputTypeMenu {
         LOGGER.info(InputTypeOptions.getOptions());
         switch (Input.enumInput(InputTypeOptions.class)) {
             case CONSOLE -> AdminMenuUtil.create(serviceFactory);
-            case XML -> {
-            }
+            case XML -> InputTypeMenuUtil.parseIntoDatabase(serviceFactory);
             case BACK -> AdminMenu.showMenu(serviceFactory);
         }
     }

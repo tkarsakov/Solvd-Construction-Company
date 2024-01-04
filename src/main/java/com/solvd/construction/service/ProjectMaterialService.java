@@ -4,7 +4,7 @@ import com.solvd.construction.model.ProjectMaterial;
 
 import java.util.List;
 
-public interface ProjectMaterialService {
+public interface ProjectMaterialService extends IService<ProjectMaterial> {
     ProjectMaterial create(ProjectMaterial projectMaterial);
 
     List<ProjectMaterial> retrieveAllByProjectId(Long projectId);

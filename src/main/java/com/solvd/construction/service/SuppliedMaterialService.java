@@ -5,7 +5,7 @@ import com.solvd.construction.model.SuppliedMaterial;
 import java.util.List;
 import java.util.Optional;
 
-public interface SuppliedMaterialService {
+public interface SuppliedMaterialService extends IService<SuppliedMaterial> {
     SuppliedMaterial create(SuppliedMaterial suppliedMaterial);
 
     List<SuppliedMaterial> retrieveAll();

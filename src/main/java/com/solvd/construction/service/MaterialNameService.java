@@ -4,7 +4,7 @@ import com.solvd.construction.model.MaterialName;
 
 import java.util.Optional;
 
-public interface MaterialNameService {
+public interface MaterialNameService extends IService<MaterialName> {
     MaterialName create(MaterialName materialName);
 
     Optional<MaterialName> retrieveById(Long id);

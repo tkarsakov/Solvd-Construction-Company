@@ -25,7 +25,12 @@ public class MBSupplierServiceImpl implements SupplierService {
         try (SqlSession session = sessionFactory.openSession()) {
             SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
             supplier.setId(null);
-            supplier.setCountry(countryService.retrieveById(supplier.getCountryId()).orElse(null));
+            if (supplier.getCountryId() != null) {
+                supplier.setCountry(countryService.retrieveById(supplier.getCountryId()).orElse(null));
+            } else {
+                countryService.create(supplier.getCountry());
+                supplier.setCountryId(supplier.getCountry().getId());
+            }
             supplierMapper.create(supplier);
             session.commit();
             return supplier;

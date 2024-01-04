@@ -5,7 +5,7 @@ import com.solvd.construction.model.Position;
 import java.util.List;
 import java.util.Optional;
 
-public interface PositionService {
+public interface PositionService extends IService<Position> {
     Position create(Position position);
 
     List<Position> retrieveAll();

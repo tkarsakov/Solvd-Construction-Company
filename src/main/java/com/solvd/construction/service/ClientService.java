@@ -5,7 +5,7 @@ import com.solvd.construction.model.Client;
 import java.util.List;
 import java.util.Optional;
 
-public interface ClientService {
+public interface ClientService extends IService<Client> {
     Client create(Client client);
 
     Optional<Client> retrieveById(Long id);

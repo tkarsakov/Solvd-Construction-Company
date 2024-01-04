@@ -13,7 +13,7 @@ public class AdminMenu {
         while (true) {
             LOGGER.info(AdminOptions.getOptions());
             switch (Input.enumInput(AdminOptions.class)) {
-                case CREATE -> AdminMenuUtil.create(serviceFactory);
+                case CREATE -> InputTypeMenu.showMenu(serviceFactory);
                 case READ -> AdminMenuUtil.read(serviceFactory);
                 case UPDATE -> AdminMenuUtil.update(serviceFactory);
                 case DELETE -> AdminMenuUtil.delete(serviceFactory);

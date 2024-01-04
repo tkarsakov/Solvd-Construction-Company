@@ -9,9 +9,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Input {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final StringTokenizer commands;
+
+    static {
+        LOGGER.info("Enter a menu command or a string of commands delimited by whitespace (eg. 'jdbc user project')");
+        LOGGER.info("Commands only work for menu options, data-sensitive inputs need to be typed in by hand");
+        commands = new StringTokenizer(Input.stringConsoleInput());
+    }
 
     public static String stringConsoleInput() {
         Scanner scanner = new Scanner(System.in);
@@ -31,6 +39,7 @@ public class Input {
         Long input = null;
         while (input == null) {
             try {
+                LOGGER.info("Enter a number of type long: ");
                 input = Long.parseLong(scanner.nextLine());
             } catch (NoSuchElementException e) {
                 LOGGER.info("Incorrect input. Please try again");
@@ -46,6 +55,10 @@ public class Input {
         T input;
         while (true) {
             try {
+                if (commands.hasMoreTokens()) {
+                    input = Enum.valueOf(enumClass, commands.nextToken().toUpperCase());
+                    return input;
+                }
                 input = Enum.valueOf(enumClass, Input.stringConsoleInput().toUpperCase().strip());
                 return input;
             } catch (IllegalArgumentException e) {
