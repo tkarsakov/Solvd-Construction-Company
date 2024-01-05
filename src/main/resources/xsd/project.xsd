@@ -16,6 +16,8 @@
             <xs:element name="floors" type="xs:long"/>
             <xs:element name="budget" type="xs:decimal"/>
             <xs:element name="interiorWork" type="xs:boolean"/>
+            <xs:element name="employees" type="employees"/>
+            <xs:element name="projectMaterials" type="projectMaterials"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -24,5 +26,23 @@
             <xs:pattern value="[0-9]{1,4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="employees">
+        <xs:sequence>
+            <xs:element name="employee" type="employeeType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="employeeType">
+        <xs:attribute name="firstName" type="xs:string"/>
+        <xs:attribute name="lastName" type="xs:string"/>
+        <xs:attribute name="positionId" type="xs:long"/>
+    </xs:complexType>
+
+    <xs:complexType name="projectMaterials">
+        <xs:sequence>
+            <xs:element name="projectMaterial" type="projectMaterialType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>

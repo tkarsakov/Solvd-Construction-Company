@@ -1,9 +1,15 @@
 package com.solvd.construction.model;
 
+import com.solvd.construction.xml.jaxb.adapters.TimestampAdapter;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+@XmlRootElement(name = "project")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Project implements Model {
 
     private final BigDecimal FLOOR_COST = new BigDecimal("50000.00");
@@ -19,6 +25,10 @@ public class Project implements Model {
     private List<Employee> employeeList;
     private List<ProjectMaterial> projectMaterials;
     private Long deadline;
+
+    private Project() {
+        this(null, null, null, null, null, null, null, null, null);
+    }
 
     public Project(Long id, Timestamp finishDate, Long clientId, Timestamp startDate,
                    Long floors, BigDecimal budget, Boolean interiorWork, Long deadline) {
@@ -62,6 +72,8 @@ public class Project implements Model {
         return startDate;
     }
 
+    @XmlElement
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
@@ -70,6 +82,8 @@ public class Project implements Model {
         return finishDate;
     }
 
+    @XmlElement
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     public void setFinishDate(Timestamp finishDate) {
         this.finishDate = finishDate;
     }
@@ -78,6 +92,7 @@ public class Project implements Model {
         return clientId;
     }
 
+    @XmlElement
     public void setClientId(Long clientId) {
         this.clientId = clientId;
     }
@@ -86,6 +101,7 @@ public class Project implements Model {
         return floors;
     }
 
+    @XmlElement
     public void setFloors(Long floors) {
         this.floors = floors;
     }
@@ -94,6 +110,7 @@ public class Project implements Model {
         return budget;
     }
 
+    @XmlElement
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
     }
@@ -102,6 +119,7 @@ public class Project implements Model {
         return client;
     }
 
+    @XmlElement(name = "client")
     public void setClient(Client client) {
         this.client = client;
     }
@@ -110,6 +128,8 @@ public class Project implements Model {
         return employeeList;
     }
 
+    @XmlElementWrapper(name = "employees")
+    @XmlElement(name = "employee")
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
     }
@@ -118,6 +138,8 @@ public class Project implements Model {
         return projectMaterials;
     }
 
+    @XmlElementWrapper(name = "projectMaterials")
+    @XmlElement(name = "projectMaterial")
     public void setProjectMaterials(List<ProjectMaterial> projectMaterials) {
         this.projectMaterials = projectMaterials;
     }
@@ -126,6 +148,7 @@ public class Project implements Model {
         return deadline;
     }
 
+    @XmlElement
     public void setDeadline(Long deadline) {
         this.deadline = deadline;
     }

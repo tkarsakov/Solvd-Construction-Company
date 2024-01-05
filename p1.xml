@@ -1,0 +1,30 @@
+<project>
+    <finishDate>2024-04-11 00:00:00</finishDate>
+    <client>
+        <clientName>Mr. House</clientName>
+        <clientEmail>mrhouse@gmail.com</clientEmail>
+        <countryId>2</countryId>
+    </client>
+    <startDate>2023-01-01 00:00:00</startDate>
+    <floors>5</floors>
+    <budget>1000000.00</budget>
+    <interiorWork>True</interiorWork>
+    <employees>
+        <employee firstName="Easy" lastName="Pete" positionId="1"/>
+        <employee firstName="Katana" lastName="Dude" positionId="2"/>
+    </employees>
+    <projectMaterials>
+        <projectMaterial>
+            <suppliedMaterialId>1</suppliedMaterialId>
+            <materialAmount>10.00</materialAmount>
+            <projectId/>
+            <measure>kg</measure>
+        </projectMaterial>
+        <projectMaterial>
+            <suppliedMaterialId>2</suppliedMaterialId>
+            <materialAmount>100.00</materialAmount>
+            <projectId/>
+            <measure>tonne</measure>
+        </projectMaterial>
+    </projectMaterials>
+</project>
