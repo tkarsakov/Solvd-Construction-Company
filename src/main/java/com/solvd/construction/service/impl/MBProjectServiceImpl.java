@@ -31,25 +31,24 @@ public class MBProjectServiceImpl implements ProjectService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMapper projectMapper = session.getMapper(ProjectMapper.class);
             project.setId(null);
-            if (project.getEmployeeList() != null && project.getProjectMaterials() != null) {
-                for (var employee : project.getEmployeeList()) {
-                    if (employee.getId() == null) {
-                        employeeService.create(employee);
-                    }
-                }
-                project.getProjectMaterials().forEach(projectMaterial -> {
-                    if (projectMaterial.getId() == null) {
-                        projectMaterialService.create(projectMaterial);
-                    }
-                });
-            }
-            if (project.getClientId() != null) {
-                project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
-            } else {
+            if (project.getClientId() == null) {
                 clientService.create(project.getClient());
                 project.setClientId(project.getClient().getId());
+            } else {
+                project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
             }
             projectMapper.create(project);
+            for (var employee : project.getEmployeeList()) {
+                if (employee.getId() == null) {
+                    employeeService.create(employee);
+                }
+            }
+            project.getProjectMaterials().forEach(projectMaterial -> {
+                if (projectMaterial.getId() == null) {
+                    projectMaterial.setProjectId(project.getId());
+                    projectMaterialService.create(projectMaterial);
+                }
+            });
             session.commit();
             return project;
         }

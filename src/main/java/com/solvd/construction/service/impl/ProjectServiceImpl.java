@@ -28,6 +28,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project create(Project project) {
         project.setId(null);
+        if (project.getClientId() == null) {
+            clientService.create(project.getClient());
+            project.setClientId(project.getClient().getId());
+        } else {
+            project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
+        }
+        projectRepository.create(project);
         for (var employee : project.getEmployeeList()) {
             if (employee.getId() == null) {
                 employeeService.create(employee);
@@ -35,11 +42,10 @@ public class ProjectServiceImpl implements ProjectService {
         }
         project.getProjectMaterials().forEach(projectMaterial -> {
             if (projectMaterial.getId() == null) {
+                projectMaterial.setProjectId(project.getId());
                 projectMaterialService.create(projectMaterial);
             }
         });
-        project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
-        projectRepository.create(project);
         return project;
     }
 

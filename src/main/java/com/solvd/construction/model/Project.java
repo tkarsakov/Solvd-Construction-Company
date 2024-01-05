@@ -18,6 +18,7 @@ public class Project implements Model {
     private Timestamp finishDate;
     private Long clientId;
     private Timestamp startDate;
+    @XmlElement(name = "floors")
     private Long floors;
     private BigDecimal budget;
     private Boolean interiorWork;
@@ -101,7 +102,7 @@ public class Project implements Model {
         return floors;
     }
 
-    @XmlElement
+    @XmlElement(name = "floors")
     public void setFloors(Long floors) {
         this.floors = floors;
     }
@@ -157,6 +158,7 @@ public class Project implements Model {
         return interiorWork;
     }
 
+    @XmlElement
     public void setInteriorWork(Boolean interiorWork) {
         this.interiorWork = interiorWork;
     }

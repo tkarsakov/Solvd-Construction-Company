@@ -1,7 +1,8 @@
 package com.solvd.construction.ui.menuoptions;
 
 public enum InputTypeOptions {
-    XML("xml - Parse an xml file"),
+    SAX("sax - Parse an xml file using sax"),
+    JAXB("jaxb - Parse an xml file using jaxb"),
     CONSOLE("console - Type in fields through console"),
     BACK("back - Go back to previous menu");
     final String description;

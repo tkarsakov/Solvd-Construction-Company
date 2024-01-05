@@ -14,7 +14,8 @@ public class InputTypeMenu {
         LOGGER.info(InputTypeOptions.getOptions());
         switch (Input.enumInput(InputTypeOptions.class)) {
             case CONSOLE -> AdminMenuUtil.create(serviceFactory);
-            case XML -> InputTypeMenuUtil.parseIntoDatabase(serviceFactory);
+            case SAX -> InputTypeMenuUtil.parseIntoDatabaseSAX(serviceFactory);
+            case JAXB -> InputTypeMenuUtil.parseIntoDatabaseJAXB(serviceFactory);
             case BACK -> AdminMenu.showMenu(serviceFactory);
         }
     }

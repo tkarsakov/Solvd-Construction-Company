@@ -6,20 +6,23 @@ import com.solvd.construction.ui.Input;
 import com.solvd.construction.ui.menuoptions.ObjectSelectOptions;
 import com.solvd.construction.xml.CoolParser;
 import com.solvd.construction.xml.sax.handlers.*;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Optional;
 
 public class InputTypeMenuUtil {
     private static final String SCHEMA_FOLDER = "src/main/resources/xsd/";
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static void parseIntoDatabase(ServiceFactory serviceFactory) {
-        LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
-        LOGGER.info("Enter filename of xml file located in resources folder: ");
+    private static String getFilename() {
+        LOGGER.info("Enter filename of xml file located in root folder: ");
         String filename;
         while (true) {
             filename = Input.stringConsoleInput();
@@ -29,21 +32,28 @@ public class InputTypeMenuUtil {
             }
             break;
         }
+        return filename;
+    }
+
+    public static void parseIntoDatabaseSAX(ServiceFactory serviceFactory) {
+        LOGGER.info(ObjectSelectOptions.getOptions());
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
+        String filename = getFilename();
         switch (option) {
             case COUNTRY:
-                createModel(Country.class, new CountryHandler(), "country.xsd", filename, serviceFactory);
+                createModelSAX(Country.class, new CountryHandler(), "country.xsd", filename, serviceFactory);
                 break;
             case CLIENT:
-                createModel(Client.class, new ClientHandler(), "client.xsd", filename, serviceFactory);
+                createModelSAX(Client.class, new ClientHandler(), "client.xsd", filename, serviceFactory);
                 break;
             case PROJECT:
-                createModel(Project.class, new ProjectHandler(), "project.xsd", filename, serviceFactory);
+                createModelSAX(Project.class, new ProjectHandler(), "project.xsd", filename, serviceFactory);
                 break;
             case SUPPLIER:
-                createModel(Supplier.class, new SupplierHandler(), "supplier.xsd", filename, serviceFactory);
+                createModelSAX(Supplier.class, new SupplierHandler(), "supplier.xsd", filename, serviceFactory);
                 break;
             case PROJECTMATERIAL:
-                createModel(ProjectMaterial.class, new ProjectMaterialHandler(), "projectMaterial.xsd", filename, serviceFactory);
+                createModelSAX(ProjectMaterial.class, new ProjectMaterialHandler(), "projectMaterial.xsd", filename, serviceFactory);
                 break;
         }
     }
@@ -61,12 +71,52 @@ public class InputTypeMenuUtil {
         return null;
     }
 
-    private static <T extends Model, M extends DefaultHandler & ModelHandler<?>> void createModel(Class<T> modelClass,
-                                                                                                  M handler, String schemaFileName, String xmlFileName, ServiceFactory serviceFactory) {
+    private static <T extends Model, M extends DefaultHandler & ModelHandler<?>> void createModelSAX(Class<T> modelClass,
+                                                                                                     M handler, String schemaFileName, String xmlFileName, ServiceFactory serviceFactory) {
         T model = getModelFromXml(handler, schemaFileName, xmlFileName);
         if (model == null) {
+            LOGGER.info("Result of SAX parsing is an empty model. No SQL operations will be performed");
             return;
         }
         serviceFactory.getService(modelClass).create(model);
+    }
+
+    private static <T extends Model> void createModelJAXB(Class<T> modelClass, String filename, ServiceFactory serviceFactory) {
+        T model = parseModelJAXB(modelClass, filename);
+        if (model == null) {
+            LOGGER.info("Result of JAXB parsing is an empty model. No SQL operations will be performed");
+            return;
+        }
+        serviceFactory.getService(modelClass).create(model);
+    }
+
+    public static void parseIntoDatabaseJAXB(ServiceFactory serviceFactory) {
+        LOGGER.info(ObjectSelectOptions.getOptions());
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
+        String filename = getFilename();
+        switch (option) {
+            case COUNTRY -> createModelJAXB(Country.class, filename, serviceFactory);
+            case PROJECT -> createModelJAXB(Project.class, filename, serviceFactory);
+            case CLIENT -> createModelJAXB(Client.class, filename, serviceFactory);
+            case SUPPLIER -> createModelJAXB(Supplier.class, filename, serviceFactory);
+            case PROJECTMATERIAL -> createModelJAXB(ProjectMaterial.class, filename, serviceFactory);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T extends Model> T parseModelJAXB(Class<T> modelClass, String filename) {
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(modelClass);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            T model = (T) unmarshaller.unmarshal(new FileReader(filename));
+            return model;
+        } catch (JAXBException e) {
+            LOGGER.info("Error while creating context");
+            LOGGER.fatal(e.getMessage());
+        } catch (IOException e) {
+            LOGGER.info("Cannot open file {}", filename);
+            LOGGER.fatal(e.getMessage());
+        }
+        return null;
     }
 }
