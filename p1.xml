@@ -8,7 +8,7 @@
     <startDate>2023-01-01 00:00:00</startDate>
     <floors>5</floors>
     <budget>1000000.00</budget>
-    <interiorWork>True</interiorWork>
+    <interiorWork>true</interiorWork>
     <employees>
         <employee firstName="Easy" lastName="Pete" positionId="1"/>
         <employee firstName="Katana" lastName="Dude" positionId="2"/>
@@ -17,13 +17,11 @@
         <projectMaterial>
             <suppliedMaterialId>1</suppliedMaterialId>
             <materialAmount>10.00</materialAmount>
-            <projectId/>
             <measure>kg</measure>
         </projectMaterial>
         <projectMaterial>
             <suppliedMaterialId>2</suppliedMaterialId>
             <materialAmount>100.00</materialAmount>
-            <projectId/>
             <measure>tonne</measure>
         </projectMaterial>
     </projectMaterials>
