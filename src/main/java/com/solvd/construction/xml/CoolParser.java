@@ -1,6 +1,7 @@
 package com.solvd.construction.xml;
 
 import com.solvd.construction.model.Model;
+import com.solvd.construction.xml.sax.handlers.ModelHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.ErrorHandler;
