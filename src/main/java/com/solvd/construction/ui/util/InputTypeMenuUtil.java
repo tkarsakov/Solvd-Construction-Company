@@ -12,7 +12,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.Optional;
 
 public class InputTypeMenuUtil {
-    private static final String RESOURCE_FOLDER = "src/main/resources/";
     private static final String SCHEMA_FOLDER = "src/main/resources/xsd/";
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -27,7 +26,6 @@ public class InputTypeMenuUtil {
                 LOGGER.info("Provided {} does not match *.xml pattern", filename);
                 continue;
             }
-            filename = RESOURCE_FOLDER + filename;
             break;
         }
         switch (option) {
@@ -64,6 +62,10 @@ public class InputTypeMenuUtil {
 
     private static <T extends Model, M extends DefaultHandler & ModelHandler<?>> void createModel(Class<T> modelClass,
                                                                                                   M handler, String schemaFileName, String xmlFileName, ServiceFactory serviceFactory) {
-        serviceFactory.getService(modelClass).create(getModelFromXml(handler, schemaFileName, xmlFileName));
+        T model = getModelFromXml(handler, schemaFileName, xmlFileName);
+        if (model == null) {
+            return;
+        }
+        serviceFactory.getService(modelClass).create(model);
     }
 }
