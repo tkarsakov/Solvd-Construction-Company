@@ -38,6 +38,7 @@ public class MBProjectServiceImpl implements ProjectService {
                 project.setClient(clientService.retrieveById(project.getClientId()).orElse(null));
             }
             projectMapper.create(project);
+            session.commit();
             for (var employee : project.getEmployeeList()) {
                 if (employee.getId() == null) {
                     employeeService.create(employee);
@@ -49,7 +50,6 @@ public class MBProjectServiceImpl implements ProjectService {
                     projectMaterialService.create(projectMaterial);
                 }
             });
-            session.commit();
             return project;
         }
     }
