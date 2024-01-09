@@ -25,10 +25,15 @@ public class MBSupplierServiceImpl implements SupplierService {
         try (SqlSession session = sessionFactory.openSession()) {
             SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
             supplier.setId(null);
-            if (supplier.getCountryId() == null || supplier.getCountry().getId() == null) {
+            if (supplier.getCountryId() != null) {
+                supplier.setCountry(countryService.retrieveById(supplier.getCountryId()).orElse(null));
+            } else {
                 countryService.create(supplier.getCountry());
+                supplier.setCountryId(supplier.getCountry().getId());
             }
-            return supplierMapper.create(supplier);
+            supplierMapper.create(supplier);
+            session.commit();
+            return supplier;
         }
     }
 
@@ -67,6 +72,7 @@ public class MBSupplierServiceImpl implements SupplierService {
         try (SqlSession session = sessionFactory.openSession()) {
             SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
             supplierMapper.update(supplier);
+            session.commit();
         }
     }
 
@@ -75,6 +81,7 @@ public class MBSupplierServiceImpl implements SupplierService {
         try (SqlSession session = sessionFactory.openSession()) {
             SupplierMapper supplierMapper = session.getMapper(SupplierMapper.class);
             supplierMapper.delete(id);
+            session.commit();
         }
     }
 

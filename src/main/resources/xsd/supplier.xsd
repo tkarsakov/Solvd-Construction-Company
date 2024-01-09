@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="country.xsd"/>
+
+    <xs:element name="supplier" type="SupplierType"/>
+
+    <xs:complexType name="SupplierType">
+        <xs:sequence>
+
+            <xs:element name="supplierName" type="varchar100"/>
+
+            <xs:element name="supplierEmail" type="varchar100"/>
+
+            <xs:choice>
+                <xs:element name="countryId" type="xs:long"/>
+                <xs:element name="Country" type="CountryType"/>
+            </xs:choice>
+
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

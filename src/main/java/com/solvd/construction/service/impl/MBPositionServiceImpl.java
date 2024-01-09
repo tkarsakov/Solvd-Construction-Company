@@ -21,7 +21,9 @@ public class MBPositionServiceImpl implements PositionService {
         try (SqlSession session = sessionFactory.openSession()) {
             PositionMapper positionMapper = session.getMapper(PositionMapper.class);
             position.setId(null);
-            return positionMapper.create(position);
+            positionMapper.create(position);
+            session.commit();
+            return position;
         }
     }
 

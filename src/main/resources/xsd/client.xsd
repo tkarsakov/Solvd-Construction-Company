@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="country.xsd"/>
+
+    <xs:element name="client" type="ClientType"/>
+
+    <xs:complexType name="ClientType">
+        <xs:sequence>
+
+            <xs:element name="clientName" type="varchar100"/>
+
+            <xs:element name="clientEmail" type="varchar100"/>
+
+            <xs:choice>
+                <xs:element name="countryId" type="xs:long"/>
+                <xs:element name="Country" type="CountryType"/>
+            </xs:choice>
+
+        </xs:sequence>
+
+    </xs:complexType>
+
+</xs:schema>

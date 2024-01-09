@@ -5,7 +5,7 @@ import com.solvd.construction.model.Supplier;
 import java.util.List;
 import java.util.Optional;
 
-public interface SupplierService {
+public interface SupplierService extends IService<Supplier> {
     Supplier create(Supplier supplier);
 
     Optional<Supplier> retrieveById(Long id);

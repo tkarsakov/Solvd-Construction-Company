@@ -13,7 +13,7 @@ public class AdminMenuUtil {
 
     public static void create(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         Model model = Input.getModelFromConsole(option);
         switch (option) {
             case PROJECTMATERIAL -> serviceFactory.getProjectMaterialService().create((ProjectMaterial) model);
@@ -26,20 +26,24 @@ public class AdminMenuUtil {
 
     public static void read(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         switch (option) {
             case PROJECTMATERIAL -> serviceFactory.getProjectMaterialService().retrieveAll()
                     .forEach(projectMaterial -> LOGGER.info(projectMaterial.toString()));
-            case SUPPLIER -> serviceFactory.getSupplierService().retrieveAll();
-            case PROJECT -> serviceFactory.getProjectService().retrieveAll();
-            case COUNTRY -> serviceFactory.getCountryService().retrieveAll();
-            case CLIENT -> serviceFactory.getClientService().retrieveAll();
+            case SUPPLIER -> serviceFactory.getSupplierService().retrieveAll()
+                    .forEach(supplier -> LOGGER.info(supplier.toString()));
+            case PROJECT -> serviceFactory.getProjectService().retrieveAll()
+                    .forEach(project -> LOGGER.info(project.toString()));
+            case COUNTRY -> serviceFactory.getCountryService().retrieveAll()
+                    .forEach(country -> LOGGER.info(country.toString()));
+            case CLIENT -> serviceFactory.getClientService().retrieveAll()
+                    .forEach(client -> LOGGER.info(client.toString()));
         }
     }
 
     public static void update(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         LOGGER.info("Enter id");
         Long id = Input.longConsoleInput();
         Model model = Input.getModelFromConsole(option);
@@ -55,7 +59,7 @@ public class AdminMenuUtil {
 
     public static void delete(ServiceFactory serviceFactory) {
         LOGGER.info(ObjectSelectOptions.getOptions());
-        ObjectSelectOptions option = Input.objectSelectOptionConsoleInput();
+        ObjectSelectOptions option = Input.enumInput(ObjectSelectOptions.class);
         LOGGER.info("Enter id");
         Long id = Input.longConsoleInput();
         switch (option) {

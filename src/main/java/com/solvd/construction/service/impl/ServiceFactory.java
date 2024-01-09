@@ -1,5 +1,6 @@
 package com.solvd.construction.service.impl;
 
+import com.solvd.construction.model.*;
 import com.solvd.construction.service.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,7 +13,8 @@ import java.io.InputStream;
 
 public class ServiceFactory {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final String IMPLEMENTATION;
+
+    private final Boolean isMyBatis;
     private SqlSessionFactory sessionFactory;
 
     {
@@ -26,11 +28,35 @@ public class ServiceFactory {
     }
 
     public ServiceFactory(String implementation) {
-        this.IMPLEMENTATION = implementation;
+        this.isMyBatis = implementation.equals("mybatis");
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends Model> IService<T> getService(Class<T> modelClass) {
+        if (modelClass.equals(Project.class)) {
+            return (IService<T>) getProjectService();
+        } else if (modelClass.equals(Client.class)) {
+            return (IService<T>) getClientService();
+        } else if (modelClass.equals(Supplier.class)) {
+            return (IService<T>) getSupplierService();
+        } else if (modelClass.equals(Employee.class)) {
+            return (IService<T>) getEmployeeService();
+        } else if (modelClass.equals(ProjectMaterial.class)) {
+            return (IService<T>) getProjectMaterialService();
+        } else if (modelClass.equals(MaterialName.class)) {
+            return (IService<T>) getMaterialNameService();
+        } else if (modelClass.equals(Country.class)) {
+            return (IService<T>) getCountryService();
+        } else if (modelClass.equals(Position.class)) {
+            return (IService<T>) getPositionService();
+        } else if (modelClass.equals(SuppliedMaterial.class)) {
+            return (IService<T>) getSuppliedMaterialService();
+        }
+        return null;
     }
 
     public ClientService getClientService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBClientServiceImpl(sessionFactory);
         } else {
             return new ClientServiceImpl();
@@ -38,7 +64,7 @@ public class ServiceFactory {
     }
 
     public CountryService getCountryService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBCountryServiceImpl(sessionFactory);
         } else {
             return new CountryServiceImpl();
@@ -46,7 +72,7 @@ public class ServiceFactory {
     }
 
     public EmployeeService getEmployeeService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBEmployeeServiceImpl(sessionFactory);
         } else {
             return new EmployeeServiceImpl();
@@ -54,7 +80,7 @@ public class ServiceFactory {
     }
 
     public MaterialNameService getMaterialNameService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBMaterialNameServiceImpl(sessionFactory);
         } else {
             return new MaterialNameServiceImpl();
@@ -62,7 +88,7 @@ public class ServiceFactory {
     }
 
     public PositionService getPositionService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBPositionServiceImpl(sessionFactory);
         } else {
             return new PositionServiceImpl();
@@ -70,7 +96,7 @@ public class ServiceFactory {
     }
 
     public ProjectMaterialService getProjectMaterialService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBProjectMaterialServiceImpl(sessionFactory);
         } else {
             return new ProjectMaterialServiceImpl();
@@ -78,7 +104,7 @@ public class ServiceFactory {
     }
 
     public ProjectService getProjectService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBProjectServiceImpl(sessionFactory);
         } else {
             return new ProjectServiceImpl();
@@ -86,7 +112,7 @@ public class ServiceFactory {
     }
 
     public SuppliedMaterialService getSuppliedMaterialService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBSuppliedMaterialServiceImpl(sessionFactory);
         } else {
             return new SuppliedMaterialServiceImpl();
@@ -94,7 +120,7 @@ public class ServiceFactory {
     }
 
     public SupplierService getSupplierService() {
-        if (IMPLEMENTATION.equals("mybatis")) {
+        if (isMyBatis) {
             return new MBSupplierServiceImpl(sessionFactory);
         } else {
             return new SupplierServiceImpl();

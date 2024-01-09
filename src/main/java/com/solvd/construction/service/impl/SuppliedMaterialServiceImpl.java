@@ -25,12 +25,8 @@ public class SuppliedMaterialServiceImpl implements SuppliedMaterialService {
     @Override
     public SuppliedMaterial create(SuppliedMaterial suppliedMaterial) {
         suppliedMaterial.setId(null);
-        if (supplierService.retrieveBySupplierName(suppliedMaterial.getSupplier().getSupplierName()).isEmpty()) {
-            suppliedMaterial.setSupplierId(supplierService.create(suppliedMaterial.getSupplier()).getId());
-        }
-        if (materialNameService.retrieveByMaterialName(suppliedMaterial.getMaterialName().getMaterialName()).isEmpty()) {
-            suppliedMaterial.setMaterialNameId(materialNameService.create(suppliedMaterial.getMaterialName()).getId());
-        }
+        suppliedMaterial.setMaterialName(materialNameService.retrieveById(suppliedMaterial.getMaterialNameId()).orElse(null));
+        suppliedMaterial.setSupplier(supplierService.retrieveById(suppliedMaterial.getSupplierId()).orElse(null));
         suppliedMaterialRepository.create(suppliedMaterial);
         return suppliedMaterial;
     }

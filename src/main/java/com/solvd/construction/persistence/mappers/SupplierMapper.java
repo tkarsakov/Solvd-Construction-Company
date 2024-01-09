@@ -9,7 +9,7 @@ public interface SupplierMapper {
     @Insert("INSERT INTO suppliers(supplier_name, supplier_email, country_id) VALUES (#{supplierName}, #{supplierEmail}," +
             "#{countryId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Supplier create(Supplier supplier);
+    void create(Supplier supplier);
 
     @Select("SELECT * FROM suppliers WHERE id = #{id}")
     @Results(value = {

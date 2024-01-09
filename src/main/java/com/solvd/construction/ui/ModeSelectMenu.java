@@ -10,12 +10,15 @@ public class ModeSelectMenu {
 
     public static void showMenu(ServiceFactory serviceFactory) {
         LOGGER.info(ModeSelectOptions.getOptions());
-        switch (Input.modeSelectOptionConsoleInput()) {
+        switch (Input.enumInput(ModeSelectOptions.class)) {
             case ADMIN:
                 AdminMenu.showMenu(serviceFactory);
                 break;
             case USER:
                 UserMenu.showMenu(serviceFactory);
+                break;
+            case BACK:
+                DaoMenu.showMenu();
                 break;
             case EXIT:
                 System.exit(0);

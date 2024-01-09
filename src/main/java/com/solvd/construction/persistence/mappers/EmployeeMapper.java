@@ -8,7 +8,7 @@ import java.util.List;
 public interface EmployeeMapper {
     @Insert("INSERT INTO employees(first_name, last_name, position_id) VALUES (#{firstName}, #{lastName}, #{positionId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Employee create(Employee employee);
+    void create(Employee employee);
 
     @Select("SELECT * FROM employees")
     @Results(value = {

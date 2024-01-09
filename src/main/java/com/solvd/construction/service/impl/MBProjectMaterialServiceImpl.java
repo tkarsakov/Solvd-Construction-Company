@@ -23,10 +23,9 @@ public class MBProjectMaterialServiceImpl implements ProjectMaterialService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
             projectMaterial.setId(null);
-            if (suppliedMaterialService.retrieveById(projectMaterial.getSuppliedMaterial().getId()).isEmpty()) {
-                suppliedMaterialService.create(projectMaterial.getSuppliedMaterial());
-            }
+            projectMaterial.setSuppliedMaterial(suppliedMaterialService.retrieveById(projectMaterial.getSuppliedMaterialId()).orElse(null));
             projectMaterialMapper.create(projectMaterial);
+            session.commit();
             return projectMaterial;
         }
     }
@@ -68,6 +67,7 @@ public class MBProjectMaterialServiceImpl implements ProjectMaterialService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
             projectMaterialMapper.update(projectMaterial);
+            session.commit();
         }
     }
 
@@ -76,6 +76,7 @@ public class MBProjectMaterialServiceImpl implements ProjectMaterialService {
         try (SqlSession session = sessionFactory.openSession()) {
             ProjectMaterialMapper projectMaterialMapper = session.getMapper(ProjectMaterialMapper.class);
             projectMaterialMapper.delete(id);
+            session.commit();
         }
     }
 }

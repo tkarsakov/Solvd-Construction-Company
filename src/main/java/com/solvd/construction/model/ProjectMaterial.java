@@ -1,7 +1,12 @@
 package com.solvd.construction.model;
 
+import jakarta.xml.bind.annotation.*;
+
 import java.math.BigDecimal;
 
+@XmlRootElement(name = "projectMaterial")
+@XmlType(propOrder = {"suppliedMaterialId", "materialAmount", "projectId", "measure"})
+@XmlAccessorType(value = XmlAccessType.NONE)
 public class ProjectMaterial implements Model {
     private Long id;
     private Long suppliedMaterialId;
@@ -9,6 +14,10 @@ public class ProjectMaterial implements Model {
     private BigDecimal materialAmount;
     private Long projectId;
     private String measure;
+
+    private ProjectMaterial() {
+        this(null, null, null, null, null);
+    }
 
     public ProjectMaterial(Long id, Long suppliedMaterialId, BigDecimal materialAmount, Long projectId, String measure) {
         this.id = id;
@@ -28,6 +37,7 @@ public class ProjectMaterial implements Model {
         return suppliedMaterialId;
     }
 
+    @XmlElement
     public void setSuppliedMaterialId(Long suppliedMaterialId) {
         this.suppliedMaterialId = suppliedMaterialId;
     }
@@ -36,6 +46,7 @@ public class ProjectMaterial implements Model {
         return projectId;
     }
 
+    @XmlElement
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
@@ -54,6 +65,7 @@ public class ProjectMaterial implements Model {
         return materialAmount;
     }
 
+    @XmlElement
     public void setMaterialAmount(BigDecimal materialAmount) {
         this.materialAmount = materialAmount;
     }
@@ -63,6 +75,7 @@ public class ProjectMaterial implements Model {
         return measure;
     }
 
+    @XmlElement
     public void setMeasure(String measure) {
         this.measure = measure;
     }

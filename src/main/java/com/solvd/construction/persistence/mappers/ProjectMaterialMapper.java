@@ -9,7 +9,7 @@ public interface ProjectMaterialMapper {
     @Insert("INSERT INTO project_materials(supplied_material_id, material_amount, project_id, measure) "
             + "VALUES (#{suppliedMaterialId}, #{materialAmount}, #{projectId}, #{measure})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    ProjectMaterial create(ProjectMaterial projectMaterial);
+    void create(ProjectMaterial projectMaterial);
 
     @Select("SELECT * FROM project_materials WHERE project_id = #{projectId}")
     @Results(value = {

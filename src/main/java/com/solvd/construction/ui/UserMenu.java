@@ -13,7 +13,7 @@ public class UserMenu {
 
         while (true) {
             LOGGER.info(UserOptions.getOptions());
-            switch (Input.userOptionConsoleInput()) {
+            switch (Input.enumInput(UserOptions.class)) {
                 case EARNINGS:
                     UserMenuUtil.showEarnings(serviceFactory);
                     break;

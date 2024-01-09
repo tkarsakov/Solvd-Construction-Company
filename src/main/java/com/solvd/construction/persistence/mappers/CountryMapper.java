@@ -8,7 +8,7 @@ import java.util.List;
 public interface CountryMapper {
     @Insert("INSERT INTO countries(country_name, postal_code) VALUES (#{countryName}, #{postalCode})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    Country create(Country country);
+    void create(Country country);
 
     @Select("SELECT * FROM countries WHERE id = #{id}")
     @Results(value = {

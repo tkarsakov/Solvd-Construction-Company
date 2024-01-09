@@ -4,7 +4,7 @@ import com.solvd.construction.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeService {
+public interface EmployeeService extends IService<Employee> {
     Employee create(Employee employee);
 
     List<Employee> retrieveAll();

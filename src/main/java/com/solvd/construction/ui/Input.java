@@ -1,7 +1,7 @@
 package com.solvd.construction.ui;
 
 import com.solvd.construction.model.*;
-import com.solvd.construction.ui.menuoptions.*;
+import com.solvd.construction.ui.menuoptions.ObjectSelectOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,9 +9,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Input {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final StringTokenizer commands;
+
+    static {
+        LOGGER.info("Enter a menu command or a string of commands delimited by whitespace (eg. 'jdbc user project')");
+        LOGGER.info("Commands only work for menu options, data-sensitive inputs need to be typed in by hand");
+        commands = new StringTokenizer(Input.stringConsoleInput());
+    }
 
     public static String stringConsoleInput() {
         Scanner scanner = new Scanner(System.in);
@@ -31,6 +39,7 @@ public class Input {
         Long input = null;
         while (input == null) {
             try {
+                LOGGER.info("Enter a number of type long: ");
                 input = Long.parseLong(scanner.nextLine());
             } catch (NoSuchElementException e) {
                 LOGGER.info("Incorrect input. Please try again");
@@ -41,59 +50,16 @@ public class Input {
         return input;
     }
 
-    public static UserOptions userOptionConsoleInput() {
-        UserOptions input;
-        while (true) {
-            try {
-                input = UserOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
 
-    public static DaoOptions daoOptionConsoleInput() {
-        DaoOptions input;
+    public static <T extends Enum<T>> T enumInput(Class<T> enumClass) {
+        T input;
         while (true) {
             try {
-                input = DaoOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static ModeSelectOptions modeSelectOptionConsoleInput() {
-        ModeSelectOptions input;
-        while (true) {
-            try {
-                input = ModeSelectOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static AdminOptions adminOptionConsoleInput() {
-        AdminOptions input;
-        while (true) {
-            try {
-                input = AdminOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
-                return input;
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Wrong command.");
-            }
-        }
-    }
-
-    public static ObjectSelectOptions objectSelectOptionConsoleInput() {
-        ObjectSelectOptions input;
-        while (true) {
-            try {
-                input = ObjectSelectOptions.valueOf(Input.stringConsoleInput().toUpperCase().strip());
+                if (commands.hasMoreTokens()) {
+                    input = Enum.valueOf(enumClass, commands.nextToken().toUpperCase());
+                    return input;
+                }
+                input = Enum.valueOf(enumClass, Input.stringConsoleInput().toUpperCase().strip());
                 return input;
             } catch (IllegalArgumentException e) {
                 LOGGER.info("Wrong command.");

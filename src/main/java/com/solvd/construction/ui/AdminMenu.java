@@ -10,12 +10,10 @@ public class AdminMenu {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static void showMenu(ServiceFactory serviceFactory) {
-        LOGGER.info(AdminOptions.getOptions());
         while (true) {
-            switch (Input.adminOptionConsoleInput()) {
-                case PARSE -> {
-                }
-                case CREATE -> AdminMenuUtil.create(serviceFactory);
+            LOGGER.info(AdminOptions.getOptions());
+            switch (Input.enumInput(AdminOptions.class)) {
+                case CREATE -> InputTypeMenu.showMenu(serviceFactory);
                 case READ -> AdminMenuUtil.read(serviceFactory);
                 case UPDATE -> AdminMenuUtil.update(serviceFactory);
                 case DELETE -> AdminMenuUtil.delete(serviceFactory);

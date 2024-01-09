@@ -20,7 +20,9 @@ public class MBMaterialNameServiceImpl implements MaterialNameService {
         try (SqlSession session = sessionFactory.openSession()) {
             MaterialNameMapper materialNameMapper = session.getMapper(MaterialNameMapper.class);
             materialName.setId(null);
-            return materialNameMapper.create(materialName);
+            materialNameMapper.create(materialName);
+            session.commit();
+            return materialName;
         }
     }
 
