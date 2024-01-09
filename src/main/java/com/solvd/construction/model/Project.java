@@ -65,7 +65,7 @@ public class Project implements Model {
         this.id = id;
     }
 
-    public boolean isInteriorWork() {
+    public Boolean isInteriorWork() {
         return interiorWork;
     }
 
@@ -154,9 +154,6 @@ public class Project implements Model {
         this.deadline = deadline;
     }
 
-    public Boolean getInteriorWork() {
-        return interiorWork;
-    }
 
     @XmlElement
     public void setInteriorWork(Boolean interiorWork) {

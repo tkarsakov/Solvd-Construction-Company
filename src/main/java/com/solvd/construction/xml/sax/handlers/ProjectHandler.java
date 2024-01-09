@@ -82,7 +82,7 @@ public class ProjectHandler extends DefaultHandler implements ModelHandler<Proje
             case finishDate -> project.setFinishDate(Timestamp.valueOf(content));
             case budget -> project.setBudget(new BigDecimal(content));
             case floors -> project.setFloors(Long.valueOf(content));
-            case interior_work -> project.setInteriorWork(Boolean.valueOf(content));
+            case interiorWork -> project.setInteriorWork(Boolean.valueOf(content));
             case clientId -> project.setClientId(Long.valueOf(content));
             case startDate -> project.setStartDate(Timestamp.valueOf(content));
             case clientName -> project.setClient(new Client(content, null, null));

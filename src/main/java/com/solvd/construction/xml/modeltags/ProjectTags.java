@@ -9,7 +9,7 @@ public enum ProjectTags {
     startDate,
     floors,
     budget,
-    interior_work,
+    interiorWork,
     employees,
     employee,
     firstName,
