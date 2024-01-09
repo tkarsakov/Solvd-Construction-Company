@@ -19,11 +19,4 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:simpleType name="varchar100">
-        <xs:restriction base="xs:string">
-            <xs:whiteSpace value="collapse"/>
-            <xs:maxLength value="100"/>
-        </xs:restriction>
-    </xs:simpleType>
-
 </xs:schema>
