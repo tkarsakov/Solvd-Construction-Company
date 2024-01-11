@@ -1,0 +1,38 @@
+{
+    "project": {
+        "finishDate": "2027-01-01 00:00:00",
+        "client": {
+            "clientName": "Mustard Co.",
+            "clientEmail": "mustard@gmail.com",
+            "countryId": 2
+        },
+        "startDate": "2022-12-12 00:00:00",
+        "floors": 0,
+        "budget": "12312300.00",
+        "interiorWork": false,
+        "employees": [
+            {
+                "firstName": "Simon",
+                "lastName": "Man",
+                "positionId": 2
+            },
+            {
+                "firstName": "Akira",
+                "lastName": "Kurosawa",
+                "positionId": 1
+            }
+        ],
+        "projectMaterials": [
+            {
+                "suppliedMaterialId": 3,
+                "materialAmount": "700.00",
+                "measure": "kilo"
+            },
+            {
+                "suppliedMaterialId": 4,
+                "materialAmount": "80.00",
+                "measure": "block"
+            }
+        ]
+    }
+}

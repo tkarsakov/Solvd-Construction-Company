@@ -18,7 +18,7 @@ public class Supplier implements Model {
         this(null, null, null);
     }
 
-    public Supplier(long id, String supplierName, String supplierEmail, Long countryId) {
+    public Supplier(Long id, String supplierName, String supplierEmail, Long countryId) {
         this.id = id;
         this.supplierName = supplierName;
         this.supplierEmail = supplierEmail;
