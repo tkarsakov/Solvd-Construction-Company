@@ -15,6 +15,7 @@ public class InputTypeMenu {
         switch (Input.enumInput(InputTypeOptions.class)) {
             case CONSOLE -> AdminMenuUtil.create(serviceFactory);
             case SAX -> InputTypeMenuUtil.parseIntoDatabaseSAX(serviceFactory);
+            case JSON -> InputTypeMenuUtil.parseIntoDatabaseJson(serviceFactory);
             case JAXB -> InputTypeMenuUtil.parseIntoDatabaseJAXB(serviceFactory);
             case BACK -> AdminMenu.showMenu(serviceFactory);
         }
