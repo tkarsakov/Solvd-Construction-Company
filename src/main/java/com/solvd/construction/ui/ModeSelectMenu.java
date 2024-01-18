@@ -1,6 +1,6 @@
 package com.solvd.construction.ui;
 
-import com.solvd.construction.service.impl.ServiceFactory;
+import com.solvd.construction.service.factory.ServiceFactory;
 import com.solvd.construction.ui.menuoptions.ModeSelectOptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
