@@ -1,7 +1,6 @@
 package com.solvd.construction.ui.util.input;
 
 import com.solvd.construction.model.Model;
-import com.solvd.construction.ui.util.input.helpers.ModelCreationHelper;
 import com.solvd.construction.ui.util.input.helpers.prompters.Prompter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,6 +66,6 @@ public class Input {
     }
 
     public static <T extends Model> Model getModelFromConsole(Prompter<T> prompter) {
-        return ModelCreationHelper.getModelFromConsole(prompter);
+        return prompter.newInstanceFromConsole();
     }
 }
