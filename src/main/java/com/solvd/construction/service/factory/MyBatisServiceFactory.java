@@ -1,7 +1,7 @@
 package com.solvd.construction.service.factory;
 
 import com.solvd.construction.service.*;
-import com.solvd.construction.service.impl.*;
+import com.solvd.construction.service.impl.mybatis.*;
 
 public class MyBatisServiceFactory extends BaseServiceFactory {
     @Override

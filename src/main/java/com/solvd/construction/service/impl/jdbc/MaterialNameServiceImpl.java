@@ -1,4 +1,4 @@
-package com.solvd.construction.service.impl;
+package com.solvd.construction.service.impl.jdbc;
 
 import com.solvd.construction.model.MaterialName;
 import com.solvd.construction.persistence.MaterialNameRepository;

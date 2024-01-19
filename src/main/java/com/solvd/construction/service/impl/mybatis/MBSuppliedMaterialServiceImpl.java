@@ -1,4 +1,4 @@
-package com.solvd.construction.service.impl;
+package com.solvd.construction.service.impl.mybatis;
 
 import com.solvd.construction.model.SuppliedMaterial;
 import com.solvd.construction.persistence.mappers.SuppliedMaterialMapper;

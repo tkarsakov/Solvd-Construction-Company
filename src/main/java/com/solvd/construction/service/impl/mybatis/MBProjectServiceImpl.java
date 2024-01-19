@@ -1,4 +1,4 @@
-package com.solvd.construction.service.impl;
+package com.solvd.construction.service.impl.mybatis;
 
 import com.solvd.construction.model.Project;
 import com.solvd.construction.persistence.mappers.ProjectMapper;
