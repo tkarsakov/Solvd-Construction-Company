@@ -2,8 +2,8 @@ package com.solvd.construction.ui.util.parsing;
 
 import com.solvd.construction.model.*;
 import com.solvd.construction.service.factory.ServiceFactory;
-import com.solvd.construction.ui.Input;
 import com.solvd.construction.ui.menuoptions.ObjectSelectOptions;
+import com.solvd.construction.ui.util.input.Input;
 import com.solvd.construction.xml.CoolParser;
 import com.solvd.construction.xml.sax.handlers.*;
 import org.apache.logging.log4j.LogManager;
