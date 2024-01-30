@@ -21,7 +21,11 @@ public class BaseAtomicOperations {
                 i++;
             }
             preparedStatement.executeUpdate();
-            t.setId(preparedStatement.getGeneratedKeys().getLong(1));
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    t.setId(resultSet.getLong(1));
+                }
+            }
             connection.commit();
         } catch (SQLException e) {
             rollbackConnection(connection);

@@ -5,7 +5,7 @@ import com.solvd.construction.model.Country;
 import java.util.List;
 import java.util.Optional;
 
-public interface CountryService {
+public interface CountryService extends IService<Country> {
     Country create(Country country);
 
     Optional<Country> retrieveById(Long id);

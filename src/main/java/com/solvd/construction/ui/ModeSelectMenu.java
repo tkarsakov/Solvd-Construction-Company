@@ -1,7 +1,8 @@
 package com.solvd.construction.ui;
 
-import com.solvd.construction.service.impl.ServiceFactory;
+import com.solvd.construction.service.factory.ServiceFactory;
 import com.solvd.construction.ui.menuoptions.ModeSelectOptions;
+import com.solvd.construction.ui.util.input.Input;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,12 +11,15 @@ public class ModeSelectMenu {
 
     public static void showMenu(ServiceFactory serviceFactory) {
         LOGGER.info(ModeSelectOptions.getOptions());
-        switch (Input.modeSelectOptionConsoleInput()) {
+        switch (Input.enumInput(ModeSelectOptions.class)) {
             case ADMIN:
                 AdminMenu.showMenu(serviceFactory);
                 break;
             case USER:
                 UserMenu.showMenu(serviceFactory);
+                break;
+            case BACK:
+                DaoMenu.showMenu();
                 break;
             case EXIT:
                 System.exit(0);

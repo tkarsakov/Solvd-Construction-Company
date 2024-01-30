@@ -1,0 +1,10 @@
+{
+    "client": {
+        "clientName": "John Tea",
+        "clientEmail": "johntea@gmail.com",
+        "country": {
+            "countryName": "Japan",
+            "postalCode": "55555"
+        }
+    }
+}

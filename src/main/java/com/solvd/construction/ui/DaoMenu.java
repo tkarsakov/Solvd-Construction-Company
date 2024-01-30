@@ -1,7 +1,10 @@
 package com.solvd.construction.ui;
 
-import com.solvd.construction.service.impl.ServiceFactory;
+import com.solvd.construction.service.factory.JdbcServiceFactory;
+import com.solvd.construction.service.factory.MyBatisServiceFactory;
+import com.solvd.construction.service.factory.ServiceFactory;
 import com.solvd.construction.ui.menuoptions.DaoOptions;
+import com.solvd.construction.ui.util.input.Input;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,16 +12,13 @@ public class DaoMenu {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public static void showMenu() {
-        String implementation;
         LOGGER.info(DaoOptions.getOptions());
-        switch (Input.daoOptionConsoleInput()) {
+        switch (Input.enumInput(DaoOptions.class)) {
             case JDBC:
-                implementation = "jdbc";
-                ModeSelectMenu.showMenu(new ServiceFactory(implementation));
+                ModeSelectMenu.showMenu(new ServiceFactory(new JdbcServiceFactory()));
                 break;
             case MYBATIS:
-                implementation = "mybatis";
-                ModeSelectMenu.showMenu(new ServiceFactory(implementation));
+                ModeSelectMenu.showMenu(new ServiceFactory(new MyBatisServiceFactory()));
                 break;
             case EXIT:
                 System.exit(0);

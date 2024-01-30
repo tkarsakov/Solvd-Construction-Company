@@ -1,5 +1,12 @@
 package com.solvd.construction.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "supplier")
+@XmlAccessorType(XmlAccessType.NONE)
 public class Supplier implements Model {
     private Long id;
     private String supplierName;
@@ -7,7 +14,11 @@ public class Supplier implements Model {
     private Long countryId;
     private Country country;
 
-    public Supplier(long id, String supplierName, String supplierEmail, Long countryId) {
+    private Supplier() {
+        this(null, null, null);
+    }
+
+    public Supplier(Long id, String supplierName, String supplierEmail, Long countryId) {
         this.id = id;
         this.supplierName = supplierName;
         this.supplierEmail = supplierEmail;
@@ -34,6 +45,7 @@ public class Supplier implements Model {
         return supplierName;
     }
 
+    @XmlElement
     public void setSupplierName(String supplierName) {
         this.supplierName = supplierName;
     }
@@ -42,6 +54,7 @@ public class Supplier implements Model {
         return supplierEmail;
     }
 
+    @XmlElement
     public void setSupplierEmail(String supplierEmail) {
         this.supplierEmail = supplierEmail;
     }
@@ -50,6 +63,7 @@ public class Supplier implements Model {
         return countryId;
     }
 
+    @XmlElement
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
@@ -58,6 +72,7 @@ public class Supplier implements Model {
         return country;
     }
 
+    @XmlElement(name = "country")
     public void setCountry(Country country) {
         this.country = country;
     }

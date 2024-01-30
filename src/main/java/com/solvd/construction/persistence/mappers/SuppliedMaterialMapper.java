@@ -9,7 +9,7 @@ public interface SuppliedMaterialMapper {
     @Insert("INSERT INTO supplied_materials(material_id, supplier_id, price) VALUES (#{materialId}, #{supplierId}, " +
             "#{price})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    SuppliedMaterial create(SuppliedMaterial suppliedMaterial);
+    void create(SuppliedMaterial suppliedMaterial);
 
     @Select("SELECT * FROM supplied_materials")
     @Results(value = {

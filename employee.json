@@ -1,0 +1,7 @@
+{
+    "employee": {
+        "firstName": "firstName",
+        "lastName": "lastName",
+        "positionId": 1
+    }
+}

@@ -2,8 +2,8 @@ package com.solvd.construction.ui.util;
 
 import com.solvd.construction.model.Project;
 import com.solvd.construction.service.ProjectService;
-import com.solvd.construction.service.impl.ServiceFactory;
-import com.solvd.construction.ui.Input;
+import com.solvd.construction.service.factory.ServiceFactory;
+import com.solvd.construction.ui.util.input.Input;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
